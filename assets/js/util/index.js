@@ -253,7 +253,7 @@ export const getDaysBetweenDates = ( dateStart, dateEnd ) => {
  * @param {int} previous The previous value.
  * @param {int} current  The current value.
  *
- * @returns {int|string} The percent change.
+ * @returns {string} The percent change.
  */
 export const changeToPercent = ( previous, current ) => {
 

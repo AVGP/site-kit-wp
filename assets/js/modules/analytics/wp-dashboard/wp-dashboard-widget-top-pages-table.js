@@ -22,9 +22,9 @@ import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/d
 import PreviewTable from 'GoogleComponents/preview-table';
 import { isDataZeroForReporting } from '../util';
 
-const { __ } = wp.i18n;
-const { map } = lodash;
-const { Component } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { map } from 'lodash';
+import { Component } from '@wordpress/element';
 
 class WPAnalyticsDashboardWidgetTopPagesTable extends Component {
 

@@ -22,7 +22,7 @@ import DashboardNotifications from './dashboard-notifications';
 import 'GoogleComponents/publisher-wins';
 import 'GoogleComponents/notifications';
 
-const { Component, Fragment } = wp.element;
+import { Component, Fragment } from '@wordpress/element';
 
 class DashboardApp extends Component {
 

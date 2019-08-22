@@ -18,7 +18,7 @@
 
 import { changeToPercent, readableLargeNumber } from 'GoogleUtil';
 
-const { each }  = lodash;
+import { each } from 'lodash';
 let searchConsoleData = false;
 
 function reduceSearchConsoleData( rows ) {

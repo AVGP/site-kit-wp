@@ -23,8 +23,8 @@ import {
 	sendAnalyticsTrackingEvent,
 } from 'GoogleUtil';
 
-const { each, find, filter } = lodash;
-const { __, sprintf } = wp.i18n;
+import { each, find, filter } from 'lodash';
+import { __, sprintf } from '@wordpress/i18n';
 
 export function reduceAdSenseData( rows ) {
 	const dataMap = [

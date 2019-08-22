@@ -26,9 +26,9 @@ import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/d
 import PreviewTable from 'GoogleComponents/preview-table';
 import MiniChart from 'GoogleComponents/mini-chart';
 
-const { __, sprintf } = wp.i18n;
-const { map } = lodash;
-const { Component, Fragment } = wp.element;
+import { __, sprintf } from '@wordpress/i18n';
+import { map } from 'lodash';
+import { Component, Fragment } from '@wordpress/element';
 
 class AnalyticsDashboardWidgetTopAcquisitionSources extends Component {
 

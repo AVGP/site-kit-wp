@@ -7,7 +7,7 @@ import {
 import GenericError from 'GoogleComponents/notifications/generic-error';
 import { getReAuthUrl } from 'GoogleUtil';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 const PageSpeedInsightsCTA = () => {
 	const {

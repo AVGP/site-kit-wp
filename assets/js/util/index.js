@@ -18,13 +18,13 @@
 import data from 'GoogleComponents/data';
 import SvgIcon from 'GoogleUtil/svg-icon';
 
-const {
+import {
 	addAction,
 	addFilter,
 	applyFilters,
-} = wp.hooks;
+} from '@wordpress/hooks';
 
-const {
+import {
 	map,
 	isNull,
 	isUndefined,
@@ -33,15 +33,15 @@ const {
 	deburr,
 	toLower,
 	trim,
-} = lodash;
+	trimEnd,
+} from 'lodash';
 
-const {
+import {
 	_n,
 	sprintf,
-} = wp.i18n;
-
-const { addQueryArgs, getQueryString } = wp.url;
-const { __ } = wp.i18n;
+} from '@wordpress/i18n';
+import { addQueryArgs, getQueryString } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Remove a parameter from a URL string.
@@ -586,7 +586,6 @@ export const sendAnalyticsTrackingEvent = ( eventCategory, eventName, eventLabel
 	} = googlesitekit.admin;
 
 	const { isFirstAdmin } = googlesitekit.setup;
-	const { trimEnd }      = lodash;
 
 	if ( googlesitekit.admin.trackingOptin ) {
 		return gtag( 'event', eventName, {

@@ -26,9 +26,9 @@ import { getSiteKitAdminURL } from 'SiteKitCore/util';
 import STEPS from 'GoogleComponents/setup-wizard/wizard-steps';
 import WizardProgressStep from 'GoogleComponents/setup-wizard/wizard-progress-step';
 
-const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
-const { delay }  = lodash;
+import { __ } from '@wordpress/i18n';
+import { Component, Fragment } from '@wordpress/element';
+import { delay } from 'lodash';
 
 class Setup extends Component {
 

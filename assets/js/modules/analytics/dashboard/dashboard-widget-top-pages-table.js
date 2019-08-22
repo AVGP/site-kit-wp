@@ -22,9 +22,9 @@ import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/d
 import PreviewTable from 'GoogleComponents/preview-table';
 import PropTypes from 'prop-types';
 
-const { __ } = wp.i18n;
-const { map } = lodash;
-const { Component, Fragment } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { map } from 'lodash';
+import { Component, Fragment } from '@wordpress/element';
 
 class AnalyticsDashboardWidgetTopPagesTable extends Component {
 

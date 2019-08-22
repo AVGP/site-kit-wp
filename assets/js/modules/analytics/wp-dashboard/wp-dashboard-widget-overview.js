@@ -28,8 +28,8 @@ import { calculateOverviewData, isDataZeroForReporting } from '../util';
 import CTA from 'GoogleComponents/notifications/cta';
 import { getAnalyticsErrorMessageFromData } from '../util';
 
-const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { Component, Fragment } from '@wordpress/element';
 
 class WPAnalyticsDashboardWidgetOverview extends Component {
 

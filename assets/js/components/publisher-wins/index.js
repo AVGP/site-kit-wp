@@ -19,7 +19,7 @@
 import { getTimeInSeconds, getQueryParameter } from 'GoogleUtil';
 import * as publisherWinCallbacks from 'GoogleComponents/publisher-wins/callbacks';
 
-const { addFilter } = wp.hooks;
+import { addFilter } from '@wordpress/hooks';
 const notification = getQueryParameter( 'notification' );
 
 if ( 'authentication_success' !== notification && 'authentication_failure' !== notification ) {

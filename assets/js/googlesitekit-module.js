@@ -28,9 +28,9 @@ import './components/data.js';
  */
 import ModuleApp from './components/module-app';
 
-const { setLocaleData } = wp.i18n;
-const { doAction, applyFilters } = wp.hooks;
-const { Component, render, Fragment } = wp.element;
+import { setLocaleData } from '@wordpress/i18n';
+import { doAction, applyFilters } from '@wordpress/hooks';
+import { Component, render, Fragment } from '@wordpress/element';
 const { lazy, Suspense } = React;
 
 class GoogleSitekitModule extends Component {

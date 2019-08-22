@@ -20,7 +20,7 @@ import DashboardSearchFunnelInner from '../dashboard/dashboard-widget-search-fun
 import Layout from 'GoogleComponents/layout/layout';
 import AnalyticsInactiveCTA from 'GoogleComponents/analytics-inactive-cta';
 
-const { Component } = wp.element;
+import { Component } from '@wordpress/element';
 
 class DashboardDetailsSearchFunnel extends Component {
 

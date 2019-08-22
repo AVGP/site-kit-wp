@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-const { Component } = wp.element;
+import { Component } from '@wordpress/element';
 import GoogleChart from 'GoogleComponents/google-chart.js';
 import { colors }  from 'GoogleComponents/colors';
 class MiniChart extends Component {

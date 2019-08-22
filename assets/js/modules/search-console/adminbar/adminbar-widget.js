@@ -18,7 +18,7 @@
 
 import SearchConsoleAdminbarWidgetOverview from './adminbar-widget-overview';
 
-const { Component } = wp.element;
+import { Component } from '@wordpress/element';
 
 class GoogleSitekitSearchConsoleAdminbarWidget extends Component {
 

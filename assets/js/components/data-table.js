@@ -20,12 +20,12 @@ import PropTypes from 'prop-types';
 import SourceLink from 'GoogleComponents/source-link';
 import Link from 'GoogleComponents/link';
 
-const {
+import {
 	each,
 	debounce,
 	trim
-} = lodash;
-const { Component, createRef } = wp.element;
+} from 'lodash';
+import { Component, createRef } from '@wordpress/element';
 
 // Construct a table component from a data object.
 export const getDataTableFromData = ( data, headers, options ) => {

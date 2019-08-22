@@ -24,16 +24,10 @@ import {
 	fillFilterWithComponent,
 } from 'SiteKitCore/util';
 
-const { each, sortBy } = lodash;
-const { addQueryArgs } = wp.url;
-const {
-	addAction,
-	applyFilters,
-	doAction,
-	addFilter,
-	removeFilter,
-} = wp.hooks;
-const { __ } = wp.i18n;
+import { each, sortBy } from 'lodash';
+import { addQueryArgs } from '@wordpress/url';
+import { addAction, applyFilters, doAction, addFilter, removeFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 const data = {
 

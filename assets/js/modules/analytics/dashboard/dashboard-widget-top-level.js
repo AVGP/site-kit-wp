@@ -35,9 +35,9 @@ import {
 	getAnalyticsErrorMessageFromData,
 } from '../util';
 
-const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
-const { isEmpty } = lodash;
+import { __ } from '@wordpress/i18n';
+import { Component, Fragment } from '@wordpress/element';
+import { isEmpty } from 'lodash';
 
 class AnalyticsDashboardWidgetTopLevel extends Component {
 

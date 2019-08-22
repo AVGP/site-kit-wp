@@ -21,8 +21,8 @@ import {
 } from 'GoogleUtil';
 import Link from 'GoogleComponents/link';
 
-const { Component } = wp.element;
-const { __ } = wp.i18n;
+import { Component } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 class AdSenseSettingsStatus extends Component {
 	render() {

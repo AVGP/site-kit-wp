@@ -23,8 +23,8 @@ import { extractSearchConsoleDashboardData } from './util';
 import PreviewBlock from 'GoogleComponents/preview-block';
 import { decodeHtmlEntity } from 'GoogleUtil';
 
-const { __, sprintf } = wp.i18n;
-const { Component } = wp.element;
+import { __, sprintf } from '@wordpress/i18n';
+import { Component } from '@wordpress/element';
 
 class SearchConsoleDashboardWidgetSiteStats extends Component {
 	constructor( props ) {

@@ -25,8 +25,8 @@ import { Input, TextField } from 'SiteKitCore/material-components';
 import { sendAnalyticsTrackingEvent } from 'GoogleUtil';
 import { getSiteKitAdminURL } from 'GoogleUtil';
 
-const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { Component, Fragment } from '@wordpress/element';
 
 class PageSpeedInsightsSetup extends Component {
 

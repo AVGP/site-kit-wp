@@ -32,8 +32,8 @@ import {
 } from '../util';
 import Layout from 'GoogleComponents/layout/layout';
 
-const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { Component, Fragment } from '@wordpress/element';
 
 class AdSenseDashboardMainSummary extends Component {
 	constructor( props ) {

@@ -18,7 +18,7 @@
 
 import { fillFilterWithComponent } from 'GoogleUtil';
 import TagmanagerSetup from 'GoogleModules/tagmanager/setup';
-const { addFilter } = wp.hooks;
+import { addFilter } from '@wordpress/hooks';
 const slug = 'tagmanager';
 
 if ( googlesitekit.modules.tagmanager.active ) {

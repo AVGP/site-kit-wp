@@ -18,8 +18,8 @@
 
 import { changeToPercent } from 'GoogleUtil';
 
-const { each }  = lodash;
-const { __ } = wp.i18n;
+import { each } from 'lodash';
+import { __ } from '@wordpress/i18n';
 
 export const extractAnalyticsDataForTrafficChart = ( reports ) => {
 	if ( ! reports || ! reports.length ) {
@@ -88,7 +88,6 @@ export const extractAnalyticsDashboardData = ( reports, selectedStats, days ) =>
 	if ( ! reports || ! reports.length ) {
 		return null;
 	}
-	const { __ } = wp.i18n;
 
 	// Data is returned as an object.
 	const rows = reports[0].data.rows;

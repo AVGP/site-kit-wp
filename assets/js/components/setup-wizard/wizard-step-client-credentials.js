@@ -27,9 +27,9 @@ import HelpLink from 'GoogleComponents/help-link';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
-const { Component } = wp.element;
-const { addQueryArgs } = wp.url;
+import { __ } from '@wordpress/i18n';
+import { Component } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
 
 class WizardStepClientCredentials extends Component {
 	constructor( props ) {

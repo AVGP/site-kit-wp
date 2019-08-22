@@ -25,8 +25,8 @@ import {
 import withData from 'GoogleComponents/higherorder/withdata';
 import { isDataZeroAdSense } from '../util';
 
-const { __ } = wp.i18n;
-const { Component } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { Component } from '@wordpress/element';
 
 class AdSenseEstimateEarningsWidget extends Component {
 

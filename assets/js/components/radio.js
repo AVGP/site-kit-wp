@@ -19,7 +19,7 @@
 import { MDCFormField, MDCRadio } from 'SiteKitCore/material-components';
 import PropTypes from 'prop-types';
 
-const { Component, createRef } = wp.element;
+import { Component, createRef } from '@wordpress/element';
 
 class Radio extends Component {
 	constructor( props ) {

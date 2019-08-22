@@ -21,8 +21,8 @@ import { getTimeInSeconds } from 'GoogleUtil';
 import WinsWithData from './wins-withdata';
 import { getDaysBetweenDates } from 'GoogleUtil';
 
-const { applyFilters } = wp.hooks;
-const { camelCase } = lodash;
+import { applyFilters } from '@wordpress/hooks';
+import { camelCase } from 'lodash';
 
 export const wincallbacks = applyFilters( 'googlesitekit.winCallbacks', {} );
 

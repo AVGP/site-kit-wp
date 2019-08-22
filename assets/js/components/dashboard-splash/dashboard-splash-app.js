@@ -23,9 +23,9 @@ import { sendAnalyticsTrackingEvent } from 'GoogleUtil';
 import 'GoogleComponents/publisher-wins';
 import 'GoogleComponents/notifications';
 
-const { Component, Fragment } = wp.element;
+import { Component, Fragment } from '@wordpress/element';
 const { lazy, Suspense } = React;
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 const AUTHENTICATION = 1;
 const SETUP = 2;

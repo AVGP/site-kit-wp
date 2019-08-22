@@ -19,8 +19,8 @@
 import SearchConsoleDashboardWidgetKeywordTable from '../dashboard/dashboard-widget-keyword-table';
 import Layout from 'GoogleComponents/layout/layout';
 
-const { Component } = wp.element;
-const { __, sprintf } = wp.i18n;
+import { Component } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
 class DashboardDetailsWidgetKeywordsTable extends Component {
 

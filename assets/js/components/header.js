@@ -19,7 +19,7 @@
 import ErrorNotification from 'SiteKitCore/components/notifications/error-notification';
 import Logo from 'GoogleComponents/logo';
 import UserMenu from './user-menu';
-const { Component, Fragment } = wp.element;
+import { Component, Fragment } from '@wordpress/element';
 
 class Header extends Component {
 

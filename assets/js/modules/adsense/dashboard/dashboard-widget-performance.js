@@ -25,9 +25,9 @@ import {
 } from 'GoogleUtil';
 import { isDataZeroAdSense } from '../util';
 
-const { __ } = wp.i18n;
-const { Component } = wp.element;
-const { isUndefined } = lodash;
+import { __ } from '@wordpress/i18n';
+import { Component } from '@wordpress/element';
+import { isUndefined } from 'lodash';
 
 class AdSensePerformanceWidget extends Component {
 

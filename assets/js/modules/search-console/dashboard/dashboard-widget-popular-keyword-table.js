@@ -25,9 +25,9 @@ import {
 	isDataZeroSearchConsole,
 } from '../dashboard/util';
 
-const { __, sprintf } = wp.i18n;
-const { map } = lodash;
-const { Component } = wp.element;
+import { __, sprintf } from '@wordpress/i18n';
+import { map } from 'lodash';
+import { Component } from '@wordpress/element';
 
 class DashboardWidgetPopularKeywordsTable extends Component {
 	static renderLayout( component ) {

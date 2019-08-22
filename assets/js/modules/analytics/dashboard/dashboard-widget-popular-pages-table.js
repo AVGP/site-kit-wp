@@ -23,9 +23,9 @@ import PreviewTable from 'GoogleComponents/preview-table';
 import Layout from 'GoogleComponents/layout/layout';
 import { isDataZeroForReporting } from '../util';
 
-const { __ } = wp.i18n;
-const { map } = lodash;
-const { Component } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { map } from 'lodash';
+import { Component } from '@wordpress/element';
 
 class AnalyticsDashboardWidgetPopularPagesTable extends Component {
 	static renderLayout( component ) {

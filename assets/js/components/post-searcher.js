@@ -24,14 +24,14 @@ import {
 	getSiteKitAdminURL,
 } from 'GoogleUtil';
 
-const { Component } = wp.element;
-const {
+import { Component } from '@wordpress/element';
+import {
 	map,
 	find,
 	debounce,
 	trim,
-} = lodash;
-const { __ } = wp.i18n;
+} from 'lodash';
+import { __ } from '@wordpress/i18n';
 
 // Shim wp.sanitize for WordPress < 4.9 when it was introduced.
 // @todo remove this when the plugin drops support for WordPress < 4.9.
@@ -79,7 +79,7 @@ if ( ! wp.sanitize ) {
 		}
 	};
 }
-const { stripTags } = wp.sanitize;
+import { stripTags } from '@wordpress/sanitize';
 
 class PostSearcher extends Component {
 

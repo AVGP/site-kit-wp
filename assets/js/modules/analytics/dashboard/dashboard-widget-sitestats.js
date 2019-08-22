@@ -24,8 +24,8 @@ import withData from 'GoogleComponents/higherorder/withdata';
 import { extractAnalyticsDashboardData } from '../util';
 import PreviewBlock from 'GoogleComponents/preview-block';
 
-const { __ } = wp.i18n;
-const { Component } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { Component } from '@wordpress/element';
 
 class AnalyticsDashboardWidgetSiteStats extends Component {
 	constructor( props ) {

@@ -28,9 +28,9 @@ import {
 import GenericError from 'GoogleComponents/notifications/generic-error';
 import ModuleSettingsWarning from 'GoogleComponents/notifications/module-settings-warning';
 
-const { Component } = wp.element;
-const { __, sprintf } = wp.i18n;
-const { sortBy, filter, map } = lodash;
+import { Component } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
+import { sortBy, filter, map } from 'lodash';
 
 class ModulesList extends Component {
 

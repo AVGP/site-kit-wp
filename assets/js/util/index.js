@@ -146,7 +146,7 @@ export const readableLargeNumber = ( number, currencyCode = false ) =>  {
 		return `${currency}${readableNumber}`;
 	}
 
-	return readableNumber;
+	return readableNumber.toString();
 };
 
 /**

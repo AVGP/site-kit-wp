@@ -16,8 +16,14 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import Notification from 'GoogleComponents/notifications/notification';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 
 const DashboardAuthAlert = () => {

@@ -16,14 +16,22 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import DashboardPopularityInner from './dashboard-widget-popularity-inner';
+/**
+ * External dependencies
+ */
 import DashboardModuleHeader from 'GoogleComponents/dashboard/dashboard-module-header';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 class DashboardPopularity extends Component {
-
 	render() {
 		return (
 			<Fragment>
@@ -37,7 +45,7 @@ class DashboardPopularity extends Component {
 						timePeriod={ __( 'Last 28 days', 'google-site-kit' ) }
 					/>
 				</div>
-				<DashboardPopularityInner/>
+				<DashboardPopularityInner />
 			</Fragment>
 		);
 	}

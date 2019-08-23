@@ -16,17 +16,22 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import withData from 'GoogleComponents/higherorder/withdata';
 import { getTimeInSeconds, numberFormat } from 'GoogleUtil';
 import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/data-table';
 import PreviewTable from 'GoogleComponents/preview-table';
 
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n';
 import { map } from 'lodash';
 import { Component } from '@wordpress/element';
 
 class SearchConsoleDashboardWidgetKeywordTable extends Component {
-
 	render() {
 		const { data } = this.props;
 
@@ -37,21 +42,21 @@ class SearchConsoleDashboardWidgetKeywordTable extends Component {
 		const headers = [
 			{
 				title: __( 'Keyword', 'google-site-kit' ),
-				tooltip: __( 'Most searched for keywords related to your content', 'google-site-kit' )
+				tooltip: __( 'Most searched for keywords related to your content', 'google-site-kit' ),
 			},
 			{
 				title: __( 'Clicks', 'google-site-kit' ),
-				tooltip: __( 'Number of times users clicked on your content in search results', 'google-site-kit' )
+				tooltip: __( 'Number of times users clicked on your content in search results', 'google-site-kit' ),
 			},
 			{
 				title: __( 'Impressions', 'google-site-kit' ),
-				tooltip: __( 'Counted each time your content appears in search results', 'google-site-kit' )
-			}
+				tooltip: __( 'Counted each time your content appears in search results', 'google-site-kit' ),
+			},
 		];
 		const domain = googlesitekit.admin.siteURL;
-		let links = [];
+		const links = [];
 		const dataMapped = map( data, ( row, i ) => {
-			const query = row.keys[0];
+			const query = row.keys[ 0 ];
 			links[ i ] = sprintf(
 				'https://search.google.com/search-console/performance/search-analytics?resource_id=%s&query=!%s&num_of_days=28',
 				domain,
@@ -60,7 +65,7 @@ class SearchConsoleDashboardWidgetKeywordTable extends Component {
 			return [
 				query,
 				numberFormat( row.clicks ),
-				numberFormat( row.impressions )
+				numberFormat( row.impressions ),
 			];
 		} );
 
@@ -91,7 +96,7 @@ export default withData(
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Single', 'Dashboard' ],
-		}
+		},
 	],
 	<PreviewTable padding />,
 	{ createGrid: true }

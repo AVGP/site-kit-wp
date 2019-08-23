@@ -16,8 +16,14 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import { createAddToFilter } from 'GoogleUtil/helpers';
 import { fillFilterWithComponent, getSiteKitAdminURL } from 'GoogleUtil';
+/**
+ * Internal dependencies
+ */
 import AdSenseDashboardWidget from './dashboard/dashboard-widget';
 import DashboardEarnings from './dashboard/dashboard-earnings';
 import AdSenseSettings from './settings/adsense-settings';
@@ -25,6 +31,9 @@ import AdSenseModuleStatus from './dashboard/adsense-module-status';
 import AdSenseSettingsStatus from './settings/adsense-settings-status';
 import AdSenseSettingsWarning from './settings/adsense-settings-warning';
 
+/**
+ * WordPress dependencies
+ */
 import { addFilter } from '@wordpress/hooks';
 const slug = 'adsense';
 
@@ -44,17 +53,15 @@ addFilter( 'googlesitekit.SetupModuleShowLink',
 	} );
 
 if ( googlesitekit.modules.adsense.active ) {
-
 	const addAdSenseDashboardWidget = createAddToFilter( <AdSenseDashboardWidget /> );
-	const addDashboardEarnings      = createAddToFilter( <DashboardEarnings /> );
+	const addDashboardEarnings = createAddToFilter( <DashboardEarnings /> );
 
 	// If setup is complete, show the AdSense data.
 	if ( googlesitekit.modules[ slug ].setupComplete ) {
-
 		/**
 		 * Action triggered when the settings App is loaded.
 		 */
-		addFilter( `googlesitekit.ModuleApp-${slug}`,
+		addFilter( `googlesitekit.ModuleApp-${ slug }`,
 			'googlesitekit.ModuleApp',
 			addAdSenseDashboardWidget );
 
@@ -69,10 +76,9 @@ if ( googlesitekit.modules.adsense.active ) {
 		const id = currentScreen ? currentScreen.id : null;
 
 		if ( ! reAuth && 'site-kit_page_googlesitekit-module-adsense' === id ) {
-
 			// Setup incomplete: redirect to the setup flow.
 			window.location = getSiteKitAdminURL(
-				`googlesitekit-module-${slug}`,
+				`googlesitekit-module-${ slug }`,
 				{
 					reAuth: true,
 					slug,
@@ -81,9 +87,9 @@ if ( googlesitekit.modules.adsense.active ) {
 		}
 
 		// Show module as connected in the settings when status is pending review.
-		addFilter( `googlesitekit.Connected-${slug}`,
+		addFilter( `googlesitekit.Connected-${ slug }`,
 			'googlesitekit.AdSenseModuleConnected', ( isConnected ) => {
-				const { settings } = googlesitekit.modules[slug];
+				const { settings } = googlesitekit.modules[ slug ];
 				if ( ! isConnected && undefined !== settings && ( 'account-pending-review' === settings.accountStatus || 'ads-display-pending' === settings.accountStatus ) ) {
 					return true;
 				}
@@ -94,7 +100,7 @@ if ( googlesitekit.modules.adsense.active ) {
 	/**
 	 * Add components to the settings page.
 	 */
-	addFilter( `googlesitekit.ModuleSettingsDetails-${slug}`,
+	addFilter( `googlesitekit.ModuleSettingsDetails-${ slug }`,
 		'googlesitekit.AdSenseModuleSettingsDetails',
 		fillFilterWithComponent( AdSenseSettings, {
 			onSettingsPage: true,
@@ -103,7 +109,7 @@ if ( googlesitekit.modules.adsense.active ) {
 	/**
 	 * Add component to the setup wizard
 	 */
-	addFilter( `googlesitekit.ModuleSetup-${slug}`,
+	addFilter( `googlesitekit.ModuleSetup-${ slug }`,
 		'googlesitekit.TagmanagerModuleSetupWizard',
 		fillFilterWithComponent( AdSenseModuleStatus, {
 			onSettingsPage: false,
@@ -118,8 +124,8 @@ if ( googlesitekit.modules.adsense.active ) {
 				identifier: 'adsense',
 				toRefresh: () => {
 					let status = '';
-					if ( googlesitekit.modules.adsense && googlesitekit.modules.adsense['account-status'] ) {
-						status = googlesitekit.modules.adsense['account-status'].accountStatus;
+					if ( googlesitekit.modules.adsense && googlesitekit.modules.adsense[ 'account-status' ] ) {
+						status = googlesitekit.modules.adsense[ 'account-status' ].accountStatus;
 					}
 
 					if ( status && -1 < status.indexOf( 'account-connected' ) ) {

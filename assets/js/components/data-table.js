@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import SourceLink from 'GoogleComponents/source-link';
 import Link from 'GoogleComponents/link';
@@ -23,14 +26,17 @@ import Link from 'GoogleComponents/link';
 import {
 	each,
 	debounce,
-	trim
+	trim,
 } from 'lodash';
+/**
+ * WordPress dependencies
+ */
 import { Component, createRef } from '@wordpress/element';
 
 // Construct a table component from a data object.
 export const getDataTableFromData = ( data, headers, options ) => {
-	let headerRows = [];
-	let dataRows = [];
+	const headerRows = [];
+	const dataRows = [];
 
 	each( headers, ( header, i ) => {
 		headerRows.push(
@@ -56,12 +62,10 @@ export const getDataTableFromData = ( data, headers, options ) => {
 	}
 
 	each( data, ( row, j ) => {
-
-		let cells = [];
-		const link = links && links[j];
+		const cells = [];
+		const link = links && links[ j ];
 
 		each( row, ( cell, i ) => {
-
 			// Replace (none) by direct.
 			if ( 'string' === typeof cell ) {
 				cell = cell.replace( /\(none\)/gi, 'direct' );
@@ -69,7 +73,7 @@ export const getDataTableFromData = ( data, headers, options ) => {
 
 			cells.push(
 				<td key={ 'cell-' + i } className="googlesitekit-table__body-item">
-					{ row[0] === cell && link ?
+					{ row[ 0 ] === cell && link ?
 						<div className="googlesitekit-table__body-item-content">
 							<Link
 								className="googlesitekit-table__body-item-link"
@@ -102,7 +106,6 @@ export const getDataTableFromData = ( data, headers, options ) => {
 				{ cells }
 			</tr>
 		);
-
 	} );
 
 	return (
@@ -131,7 +134,7 @@ export class TableOverflowContainer extends Component {
 		super();
 
 		this.state = {
-			isScrolling: false
+			isScrolling: false,
 		};
 
 		this.scrollRef = createRef();
@@ -186,5 +189,5 @@ export class TableOverflowContainer extends Component {
 }
 
 TableOverflowContainer.propTypes = {
-	children: PropTypes.element
+	children: PropTypes.element,
 };

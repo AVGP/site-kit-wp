@@ -1,19 +1,25 @@
+/**
+ * External dependencies
+ */
 import CTA from 'GoogleComponents/notifications/cta';
 import data from 'GoogleComponents/data';
+import GenericError from 'GoogleComponents/notifications/generic-error';
 import {
 	activateOrDeactivateModule,
+	getReAuthUrl,
 	showErrorNotification,
 } from 'GoogleUtil';
-import GenericError from 'GoogleComponents/notifications/generic-error';
-import { getReAuthUrl } from 'GoogleUtil';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 
 const PageSpeedInsightsCTA = () => {
 	const {
 		active,
 		setupComplete,
-	} = googlesitekit.modules['pagespeed-insights'];
+	} = googlesitekit.modules[ 'pagespeed-insights' ];
 
 	const { canManageOptions } = googlesitekit.permissions;
 
@@ -21,7 +27,7 @@ const PageSpeedInsightsCTA = () => {
 		return null;
 	}
 
-	const handleSetUpClick = async() => {
+	const handleSetUpClick = async () => {
 		try {
 			await activateOrDeactivateModule( data, 'pagespeed-insights', true );
 

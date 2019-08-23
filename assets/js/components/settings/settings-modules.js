@@ -16,12 +16,21 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import SettingsModule from './settings-module';
+/**
+ * External dependencies
+ */
 import Layout from 'GoogleComponents/layout/layout';
 import Notification from 'GoogleComponents/notifications/notification';
 import SettingsOverlay from './settings-overlay';
 import { clearAppLocalStorage } from 'GoogleUtil/index';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 import { map, filter, sortBy } from 'lodash';
 import { Component, Fragment } from '@wordpress/element';
@@ -46,7 +55,7 @@ class SettingsModules extends Component {
 
 	componentDidMount() {
 		if ( googlesitekit.editmodule && googlesitekit.modules[ googlesitekit.editmodule ].active ) {
-			this.handleButtonAction( `${googlesitekit.editmodule}-module`, 'edit' );
+			this.handleButtonAction( `${ googlesitekit.editmodule }-module`, 'edit' );
 		}
 	}
 
@@ -55,16 +64,15 @@ class SettingsModules extends Component {
 	}
 
 	handleAccordion( module, e ) {
-
 		// Set focus on heading when clicked.
 		e.target.closest( '.googlesitekit-settings-module__header' ).focus();
 
-		this.setState( prevState => {
+		this.setState( ( prevState ) => {
 			return {
 				openModules: {
 					...prevState.openModules,
 					[ module ]: ! prevState.openModules[ module ],
-				}
+				},
 			};
 		} );
 	}
@@ -80,14 +88,14 @@ class SettingsModules extends Component {
 		if ( 'confirm' === action ) {
 			const modulePromise = applyFilters( 'googlekit.SettingsConfirmed', false, module );
 			if ( nothingToSave ) {
-				this.setState( prevState => {
+				this.setState( ( prevState ) => {
 					return {
 						isSaving: false,
 						error: false,
 						isEditing: {
 							...prevState.isEditing,
-							[ module ]: ! prevState.isEditing[ module ]
-						}
+							[ module ]: ! prevState.isEditing[ module ],
+						},
 					};
 				} );
 				return;
@@ -95,25 +103,23 @@ class SettingsModules extends Component {
 
 			this.setState( { isSaving: module } );
 			if ( ! modulePromise ) {
-
 				// Clears session and local storage on successful setting.
 				clearAppLocalStorage();
 
 				return;
 			}
 			modulePromise.then( () => {
-
 				// Clears session and local storage on every successful setting.
 				clearAppLocalStorage();
 
-				this.setState( prevState => {
+				this.setState( ( prevState ) => {
 					return {
 						isSaving: false,
 						error: false,
 						isEditing: {
 							...prevState.isEditing,
-							[ module ]: ! prevState.isEditing[ module ]
-						}
+							[ module ]: ! prevState.isEditing[ module ],
+						},
 					};
 				} );
 			} ).catch( ( err ) => {
@@ -126,11 +132,11 @@ class SettingsModules extends Component {
 				} );
 			} );
 		} else {
-			this.setState( prevState => {
+			this.setState( ( prevState ) => {
 				return {
 					isEditing: {
 						...prevState.isEditing,
-						[ module ]: ! prevState.isEditing[ module ]
+						[ module ]: ! prevState.isEditing[ module ],
 					},
 					error: false, // Reset error state when switching modules.
 				};
@@ -152,7 +158,7 @@ class SettingsModules extends Component {
 				homepage={ module.homepage }
 				learnmore={ module.learnMore }
 				active={ module.active }
-				hasSettings= { module.hasSettings }
+				hasSettings={ module.hasSettings }
 				autoActivate={ module.autoActivate }
 				updateModulesList={ this.updateModulesList }
 				handleEdit={ this.handleButtonAction }
@@ -172,14 +178,13 @@ class SettingsModules extends Component {
 	/**
 	 * Return list of modules markup.
 	 *
-	 * @param {object}  modules List of modules
+	 * @param {Object}  modules List of modules
 	 * @param {boolean} active Sets styling for active modules, helps with parent/child grouping.
 	 */
 	mapToModule( modules, active = false ) {
 		const { isSaving } = this.state;
 
 		if ( active ) {
-
 			return map( modules, function mapFn( module ) {
 				return (
 					<Fragment key={ module.slug + '-module-wrapper' }>
@@ -187,20 +192,18 @@ class SettingsModules extends Component {
 					</Fragment>
 				);
 			}.bind( this ) );
-
-		} else {
-
-			return map( modules, function mapFn( module ) {
-				return (
-					<div
-						className="mdc-layout-grid__cell mdc-layout-grid__cell--span-4"
-						key={ module.slug + '-module-wrapper' }
-					>
-						{ this.settingsModuleComponent( module, isSaving ) }
-					</div>
-				);
-			}.bind( this ) );
 		}
+
+		return map( modules, function mapFn( module ) {
+			return (
+				<div
+					className="mdc-layout-grid__cell mdc-layout-grid__cell--span-4"
+					key={ module.slug + '-module-wrapper' }
+				>
+					{ this.settingsModuleComponent( module, isSaving ) }
+				</div>
+			);
+		}.bind( this ) );
 	}
 
 	render() {
@@ -261,24 +264,24 @@ class SettingsModules extends Component {
 				{ 1 === activeTab && // If <SettingsApp/> is on the Add tab. TODO this could be removed after refactoring this into separate components.
 					inactiveModulesAvailable && // We have inactive modules available.
 
-							<div className="
+					<div className="
 								mdc-layout-grid__cell
 								mdc-layout-grid__cell--span-12
 							">
-								<Layout
-									header
-									title={ __( 'Connect More Services to Gain More Insights', 'google-site-kit' ) }
-									relative
-								>
-									<div className="mdc-layout-grid">
-										<div className="mdc-layout-grid__inner">
-											{ 0 < inactiveModules.length && inactiveModules }
-										</div>
-									</div>
-									{ /* TODO: Need some input here with regards to changing state */ }
-									{ editActive && <SettingsOverlay/> }
-								</Layout>
+						<Layout
+							header
+							title={ __( 'Connect More Services to Gain More Insights', 'google-site-kit' ) }
+							relative
+						>
+							<div className="mdc-layout-grid">
+								<div className="mdc-layout-grid__inner">
+									{ 0 < inactiveModules.length && inactiveModules }
+								</div>
 							</div>
+							{ /* TODO: Need some input here with regards to changing state */ }
+							{ editActive && <SettingsOverlay /> }
+						</Layout>
+					</div>
 				}
 				{ 1 === activeTab && // If <SettingsApp/> is on the Add tab. TODO this could be removed after refactoring this into separate components.
 					! inactiveModulesAvailable && // If we have no active modules.

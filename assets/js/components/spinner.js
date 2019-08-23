@@ -16,13 +16,15 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 /**
  * A single module. Keeps track of its own active state and settings.
  */
 class Spinner extends Component {
-
 	render() {
 		const { isSaving } = this.props;
 		return (

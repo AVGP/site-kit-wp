@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
 import { createElement, Fragment } from '@wordpress/element';
 
 /**
@@ -36,7 +39,6 @@ import { createElement, Fragment } from '@wordpress/element';
 export const createAddToFilter = ( NewComponent ) => {
 	return ( OriginalComponent ) => {
 		return function FilteredComponent( props ) {
-
 			return (
 				createElement(
 					Fragment,

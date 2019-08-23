@@ -73,7 +73,7 @@ const valuesToTest = [
 		123456789.87,
 		'de-DE',
 		'123.456.789,87',
-	]
+	],
 ];
 
 // Disable reason: Node needs some polyfills for supporting a different locale.

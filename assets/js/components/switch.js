@@ -16,9 +16,15 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import { MDCSwitch } from 'SiteKitCore/material-components';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment, createRef } from '@wordpress/element';
 
 class Switch extends Component {
@@ -34,12 +40,23 @@ class Switch extends Component {
 	render() {
 		const { id, onClick, label, checked, hideLabel } = this.props;
 
+		const onKeyPress = ( event ) => {
+			if ( typeof onClick === 'function' && event.code === 'Enter' ) {
+				onClick( event );
+			}
+		};
+
 		return (
 			<Fragment>
 				<div
+					aria-checked={ checked ? 'true' : 'false' }
 					className={ `mdc-switch ${ checked ? 'mdc-switch--checked' : '' }` }
 					onClick={ onClick }
-					ref={ this.switchRef }>
+					onKeyPress={ onKeyPress }
+					role="switch"
+					ref={ this.switchRef }
+					tabIndex={ 0 }
+				>
 					<div className="mdc-switch__track">&nbsp;</div>
 					<div className="mdc-switch__thumb-underlay">
 						<div className="mdc-switch__thumb">

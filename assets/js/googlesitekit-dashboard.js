@@ -16,21 +16,26 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import {
 	addPerformanceMonitoring,
 	clearAppLocalStorage,
-}  from 'GoogleUtil';
+} from 'GoogleUtil';
 import Notification from 'GoogleComponents/notifications/notification';
 import Setup from 'GoogleComponents/setup/setup-wrapper';
 import DashboardApp from 'GoogleComponents/dashboard/dashboard-app';
 import NotificationCounter from 'GoogleComponents/notifications/notification-counter';
 
+/**
+ * WordPress dependencies
+ */
 import { setLocaleData } from '@wordpress/i18n';
 import { Component, render, Fragment } from '@wordpress/element';
 import { doAction } from '@wordpress/hooks';
 
 class GoogleSitekitDashboard extends Component {
-
 	constructor( props ) {
 		super( props );
 		this.state = {
@@ -64,7 +69,7 @@ class GoogleSitekitDashboard extends Component {
 
 		if ( showModuleSetupWizard ) {
 			return (
-				<Setup/>
+				<Setup />
 			);
 		}
 
@@ -98,14 +103,12 @@ class GoogleSitekitDashboard extends Component {
 
 // Initialize the app once the DOM is ready.
 wp.domReady( function() {
-
-	if (  googlesitekit.admin.resetSession ) {
+	if ( googlesitekit.admin.resetSession ) {
 		clearAppLocalStorage();
 	}
 
 	const dashboard = document.getElementById( 'js-googlesitekit-dashboard' );
 	if ( null !== dashboard ) {
-
 		// Render the Dashboard App.
 		render( <GoogleSitekitDashboard />, dashboard );
 

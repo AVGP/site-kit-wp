@@ -16,7 +16,13 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import DashboardDetailsModules from './dashboard-details-modules';
+/**
+ * External dependencies
+ */
 import Header from 'GoogleComponents/header';
 import Link from 'GoogleComponents/link';
 import PageHeader from 'GoogleComponents/page-header';
@@ -25,11 +31,13 @@ import { decodeHtmlEntity } from 'GoogleUtil';
 import DateRangeSelector from 'GoogleComponents/date-range-selector';
 import HelpLink from 'GoogleComponents/help-link';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 class DashboardDetailsApp extends Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -39,7 +47,7 @@ class DashboardDetailsApp extends Component {
 	render() {
 		return (
 			<Fragment>
-				<Header/>
+				<Header />
 				<div className="googlesitekit-module-page">
 					<div className="googlesitekit-dashboard-single-url">
 						<div className="mdc-layout-grid">
@@ -87,7 +95,7 @@ class DashboardDetailsApp extends Component {
 															googlesitekit-heading-3
 															googlesitekit-dashboard-single-url__title
 														">
-														{ decodeHtmlEntity ( googlesitekit.pageTitle ) }
+														{ decodeHtmlEntity( googlesitekit.pageTitle ) }
 													</h3>
 													<Link href={ googlesitekit.permaLink } inherit external>
 														{ googlesitekit.permaLink }
@@ -97,13 +105,13 @@ class DashboardDetailsApp extends Component {
 										</div>
 									</Layout>
 								</div>
-								<DashboardDetailsModules/>
+								<DashboardDetailsModules />
 								<div className="
 									mdc-layout-grid__cell
 									mdc-layout-grid__cell--span-12
 									mdc-layout-grid__cell--align-right
 								">
-									<HelpLink/>
+									<HelpLink />
 								</div>
 							</div>
 						</div>

@@ -16,15 +16,23 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import DashboardSpeedInner from './dashboard-widget-speed-inner';
+/**
+ * External dependencies
+ */
 import Layout from 'GoogleComponents/layout/layout';
 import DashboardModuleHeader from 'GoogleComponents/dashboard/dashboard-module-header';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 class DashboardSpeed extends Component {
-
 	render() {
 		return (
 			<Fragment>

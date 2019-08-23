@@ -16,16 +16,18 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import Link from 'GoogleComponents/link';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class CTA extends Component {
-	constructor( props ) {
-		super( props );
-	}
-
 	render() {
 		const {
 			title,

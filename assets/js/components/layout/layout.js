@@ -16,10 +16,16 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import LayoutHeader from 'GoogleComponents/layout/layout-header';
 import LayoutFooter from 'GoogleComponents/layout/layout-footer';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class Layout extends Component {
@@ -63,7 +69,6 @@ class Layout extends Component {
 				}
 			</div>
 		);
-
 	}
 }
 

@@ -16,7 +16,13 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import SvgIcon from 'GoogleUtil/svg-icon';
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 
 const Logo = ( props ) => {

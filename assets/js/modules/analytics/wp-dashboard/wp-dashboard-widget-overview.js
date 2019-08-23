@@ -16,23 +16,31 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PreviewBlocks from 'GoogleComponents/preview-blocks';
 import DataBlock from 'GoogleComponents/data-block.js';
+import CTA from 'GoogleComponents/notifications/cta';
 import withData from 'GoogleComponents/higherorder/withdata';
 import {
 	getTimeInSeconds,
 	prepareSecondsForDisplay,
 	readableLargeNumber,
 } from 'GoogleUtil';
-import { calculateOverviewData, isDataZeroForReporting } from '../util';
-import CTA from 'GoogleComponents/notifications/cta';
-import { getAnalyticsErrorMessageFromData } from '../util';
 
+/**
+ * Internal dependencies
+ */
+import { calculateOverviewData, getAnalyticsErrorMessageFromData, isDataZeroForReporting } from '../util';
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 import { Component, Fragment } from '@wordpress/element';
 
 class WPAnalyticsDashboardWidgetOverview extends Component {
-
 	render() {
 		const { data } = this.props;
 
@@ -50,7 +58,7 @@ class WPAnalyticsDashboardWidgetOverview extends Component {
 			totalUsers,
 			averageSessionDuration,
 			totalUsersChange,
-			averageSessionDurationChange
+			averageSessionDurationChange,
 		} = overviewData;
 
 		return (
@@ -70,14 +78,14 @@ class WPAnalyticsDashboardWidgetOverview extends Component {
 							title={ __( 'Total Unique Visitors', 'google-site-kit' ) }
 							datapoint={ readableLargeNumber( totalUsers ) }
 							change={ totalUsersChange }
-							changeDataUnit='%'
+							changeDataUnit="%"
 						/>
 						<DataBlock
 							className="googlesitekit-wp-dashboard-stats__data-table overview-average-session-duration"
 							title={ __( 'Avg. Time on Page', 'google-site-kit' ) }
 							datapoint={ prepareSecondsForDisplay( averageSessionDuration ) }
 							change={ averageSessionDurationChange }
-							changeDataUnit='%'
+							changeDataUnit="%"
 						/>
 					</Fragment>
 				}
@@ -96,11 +104,11 @@ export default withData(
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'WPDashboard' ],
-		}
+		},
 	],
 	<PreviewBlocks
-		width='23%'
-		height='94px'
+		width="23%"
+		height="94px"
 		count={ 2 }
 	/>,
 	{},

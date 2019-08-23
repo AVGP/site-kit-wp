@@ -16,12 +16,14 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 const { siteURL } = googlesitekit.admin;
 
 class SearchConsoleSettingStatus extends Component {
-
 	render() {
 		return (
 			<div className="

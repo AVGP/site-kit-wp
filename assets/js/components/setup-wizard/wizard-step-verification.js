@@ -16,20 +16,18 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import SiteVerification from 'GoogleComponents/setup/site-verification';
 
 /**
- * WordPress dependencies.
+ * WordPress dependencies
  */
 import { Component } from '@wordpress/element';
 
-
 class WizardStepVerification extends Component {
-	constructor( props ) {
-		super( props );
-	}
-
 	render() {
 		const { isVerified } = this.props;
 		const shouldSetup = ! isVerified;
@@ -52,7 +50,7 @@ class WizardStepVerification extends Component {
 }
 
 WizardStepVerification.propTypes = {
-	siteVerificationSetup: PropTypes.func.isRequired
+	siteVerificationSetup: PropTypes.func.isRequired,
 };
 
 export default WizardStepVerification;

@@ -16,13 +16,19 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import Header from 'GoogleComponents/header';
 import Link from 'GoogleComponents/link';
 import HelpLink from 'GoogleComponents/help-link';
 import { getSiteKitAdminURL } from 'SiteKitCore/util';
+import { delay } from 'lodash';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element';
-import { delay }  from 'lodash';
 import { __ } from '@wordpress/i18n';
 import { applyFilters } from '@wordpress/hooks';
 import { withFilters } from '@wordpress/components';
@@ -52,11 +58,10 @@ class SetupWrapper extends Component {
 		this.timeoutID = null;
 		this.unfocusedTime = 0;
 		this.autoRefreshModules = applyFilters( 'googlesitekit.autoRefreshModules', [] );
-		this.moduleRefresh = this.autoRefreshModules.find( module => this.state.currentModule === module.identifier );
+		this.moduleRefresh = this.autoRefreshModules.find( ( module ) => this.state.currentModule === module.identifier );
 
 		this.refreshStatus = this.refreshStatus.bind( this );
 		this.startUnfocusedTimer = this.startUnfocusedTimer.bind( this );
-
 	}
 
 	componentDidMount() {
@@ -73,7 +78,6 @@ class SetupWrapper extends Component {
 	 * Start timer for time window is unfocused.
 	 */
 	startUnfocusedTimer() {
-
 		if ( this.moduleRefresh ) {
 			let toRefresh = true;
 			if ( this.moduleRefresh.toRefresh ) {
@@ -93,7 +97,6 @@ class SetupWrapper extends Component {
 	 * and after certain time of inactivity.
 	 */
 	refreshStatus() {
-
 		if ( this.moduleRefresh ) {
 			const idleTime = this.moduleRefresh.idleTime || 15;
 
@@ -104,7 +107,6 @@ class SetupWrapper extends Component {
 
 			if ( toRefresh ) {
 				if ( idleTime < this.unfocusedTime ) {
-
 					// force re-render.
 					this.setState( { refresh: this.timeoutID } );
 				}
@@ -117,19 +119,24 @@ class SetupWrapper extends Component {
 	}
 
 	static loadSetupModule( slug ) {
-		const FilteredModuleSetup = withFilters( `googlesitekit.ModuleSetup-${slug}` )( BaseComponent );
+		// Disabled because this rule doesn't acknowledge our use of the variable
+		// as a component in JSX.
+		// eslint-disable-next-line @wordpress/no-unused-vars-before-return
+		const FilteredModuleSetup = withFilters( `googlesitekit.ModuleSetup-${ slug }` )( BaseComponent );
 
-		return <FilteredModuleSetup
-			finishSetup={ SetupWrapper.finishSetup }
-			onSettingsPage={ false }
-			isEditing={ true }/>;
+		return (
+			<FilteredModuleSetup
+				finishSetup={ SetupWrapper.finishSetup }
+				onSettingsPage={ false }
+				isEditing={ true }
+			/>
+		);
 	}
 
 	/**
 	 * When module setup done, we redirect the user to Site Kit dashboard.
 	 */
 	static finishSetup() {
-
 		const args = {
 			notification: 'authentication_success',
 		};
@@ -150,15 +157,15 @@ class SetupWrapper extends Component {
 
 	render() {
 		const { currentModule } = this.state;
-		const setupModule       = SetupWrapper.loadSetupModule( currentModule );
-		const settingsPageUrl   = getSiteKitAdminURL(
+		const setupModule = SetupWrapper.loadSetupModule( currentModule );
+		const settingsPageUrl = getSiteKitAdminURL(
 			'googlesitekit-settings',
 			{}
 		);
 
 		return (
 			<Fragment>
-				<Header/>
+				<Header />
 				<div className="googlesitekit-setup">
 					<div className="mdc-layout-grid">
 						<div className="mdc-layout-grid__inner">
@@ -193,7 +200,7 @@ class SetupWrapper extends Component {
 														mdc-layout-grid__cell--span-6-desktop
 													">
 													<Link
-														id={ `setup-${currentModule}-cancel` }
+														id={ `setup-${ currentModule }-cancel` }
 														href={ settingsPageUrl }
 													>{ __( 'Cancel', 'google-site-kit' ) }</Link>
 												</div>
@@ -218,6 +225,5 @@ class SetupWrapper extends Component {
 		);
 	}
 }
-
 
 export default SetupWrapper;

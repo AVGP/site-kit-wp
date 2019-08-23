@@ -7,23 +7,23 @@ const valuesToTest = [
 	[
 		'?foo=bar&x=1',
 		'foo',
-		'bar'
+		'bar',
 	],
 	[
 		'?bar=foo&x=1',
 		'bar',
-		'foo'
+		'foo',
 	],
 	[
 		'?foo=bar&x=1',
 		'x',
-		'1'
+		'1',
 	],
 	[
 		'?foo=bar&y=2&x=1',
 		'y',
-		'2'
-	]
+		'2',
+	],
 ];
 
 // Disable reason: Needs investigation.

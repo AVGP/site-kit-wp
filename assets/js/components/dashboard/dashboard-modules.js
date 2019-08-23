@@ -16,13 +16,21 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import DashboardModule from './dashboard-module';
+/**
+ * External dependencies
+ */
 import HelpLink from 'GoogleComponents/help-link';
 import { Fragment } from 'react';
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class DashboardModules extends Component {
-
 	render() {
 		return (
 			<Fragment>
@@ -34,7 +42,7 @@ class DashboardModules extends Component {
 					mdc-layout-grid__cell--span-12
 					mdc-layout-grid__cell--align-right
 				">
-					<HelpLink/>
+					<HelpLink />
 				</div>
 			</Fragment>
 		);

@@ -7,11 +7,11 @@ global.googlesitekit = {
 
 	modules: {
 		'search-console': {
-			screenId: 'googlesitekit-module-search-console'
+			screenId: 'googlesitekit-module-search-console',
 		},
 		'pagespeed-insights': {
-			screenId: 'googlesitekit-module-pagespeed-insights'
-		}
+			screenId: 'googlesitekit-module-pagespeed-insights',
+		},
 	},
 
 	setup: {
@@ -22,11 +22,11 @@ global.googlesitekit = {
 // eslint-disable-next-line no-undef
 global.gtag = function( type, name, sendto, category, label, value ) {
 	return {
-		type: type,
-		name: name,
-		sendto: sendto,
-		category: category,
-		label: label,
-		value: value
+		type,
+		name,
+		sendto,
+		category,
+		label,
+		value,
 	};
 };

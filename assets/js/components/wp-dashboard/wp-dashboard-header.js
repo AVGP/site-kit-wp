@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 import { withFilters } from '@wordpress/components';
 
@@ -23,7 +26,6 @@ import { withFilters } from '@wordpress/components';
  * A single module. Keeps track of its own active state and settings.
  */
 class WPDashboardHeader extends Component {
-
 	render() {
 		return null;
 	}

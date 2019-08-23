@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import Autocomplete from 'accessible-autocomplete/react';
 import data from 'GoogleComponents/data';
 import Button from 'GoogleComponents/button';
@@ -24,6 +27,9 @@ import {
 	getSiteKitAdminURL,
 } from 'GoogleUtil';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 import {
 	map,
@@ -36,7 +42,6 @@ import { __ } from '@wordpress/i18n';
 // Shim wp.sanitize for WordPress < 4.9 when it was introduced.
 // @todo remove this when the plugin drops support for WordPress < 4.9.
 if ( ! wp.sanitize ) {
-
 	// Code directly from core.
 	wp.sanitize = {
 
@@ -47,7 +52,7 @@ if ( ! wp.sanitize ) {
 		 *
 		 * @return  Stripped text.
 		 */
-		stripTags: function( text ) {
+		stripTags( text ) {
 			text = text || '';
 
 			return text
@@ -63,9 +68,9 @@ if ( ! wp.sanitize ) {
 		 *
 		 * @return Sanitized text. False on failure.
 		 */
-		stripTagsAndEncodeText: function( text ) {
-			var _text = wp.sanitize.stripTags( text ),
-				textarea = document.createElement( 'textarea' );
+		stripTagsAndEncodeText( text ) {
+			const textarea = document.createElement( 'textarea' );
+			let _text = wp.sanitize.stripTags( text );
 
 			try {
 				textarea.innerHTML = _text;
@@ -76,13 +81,12 @@ if ( ! wp.sanitize ) {
 			}
 
 			return _text;
-		}
+		},
 	};
 }
 import { stripTags } from '@wordpress/sanitize';
 
 class PostSearcher extends Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -93,8 +97,8 @@ class PostSearcher extends Component {
 			message: '',
 		};
 		this.postSearch = this.postSearch.bind( this );
-		this.onClick    = this.onClick.bind( this );
-		this.onConfirm  = this.onConfirm.bind( this );
+		this.onClick = this.onClick.bind( this );
+		this.onConfirm = this.onConfirm.bind( this );
 	}
 
 	/**
@@ -107,9 +111,9 @@ class PostSearcher extends Component {
 		populateResults( [ __( 'Loading...', 'google-site-kit' ) ] );
 
 		try {
-			let results = await data.get( 'core', 'search', encodeURIComponent( stripTags( query ) ) );
+			const results = await data.get( 'core', 'search', encodeURIComponent( stripTags( query ) ) );
 			if ( 0 < results.length ) {
-				populateResults( map( results, result => {
+				populateResults( map( results, ( result ) => {
 					return result.post_title;
 				} ) );
 			} else {
@@ -159,7 +163,7 @@ class PostSearcher extends Component {
 		const { results, selection } = this.state;
 		const match = find(
 			results,
-			result => {
+			( result ) => {
 				return result.post_title === selection;
 			}
 		);
@@ -175,7 +179,6 @@ class PostSearcher extends Component {
 	}
 
 	render() {
-
 		const { modules } = googlesitekit;
 
 		// Set column width full if Analytics active, half otherwise.
@@ -197,7 +200,7 @@ class PostSearcher extends Component {
 								<div className="googlesitekit-post-searcher">
 									<label className="googlesitekit-post-searcher__label" htmlFor="autocomplete">{ __( 'Title or URL', 'google-site-kit' ) }</label>
 									<Autocomplete
-										id='autocomplete'
+										id="autocomplete"
 										source={ debounce( this.postSearch, 200 ) }
 										minLength={ 2 }
 										onConfirm={ this.onConfirm }

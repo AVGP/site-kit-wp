@@ -15,18 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
 import Dialog from 'GoogleComponents/dialog';
 import Button from 'GoogleComponents/button';
 import Menu from 'GoogleComponents/menu';
 import { clearAppLocalStorage } from 'GoogleUtil';
 import data from 'GoogleComponents/data';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment, createRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 class UserMenu extends Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -83,19 +88,18 @@ class UserMenu extends Component {
 			) ) ||
 				'click' === e.type // Mouse
 			) ) {
-
 			switch ( index ) {
-					case 0:
-						this.handleDialog();
-						break;
-					default:
-						this.handleMenu();
+				case 0:
+					this.handleDialog();
+					break;
+				default:
+					this.handleMenu();
 			}
 		}
 	}
 
 	handleDialog() {
-		this.setState( prevState => {
+		this.setState( ( prevState ) => {
 			return {
 				dialogActive: ! prevState.dialogActive,
 				menuOpen: false,
@@ -114,7 +118,6 @@ class UserMenu extends Component {
 
 	// Log the user out if they confirm the dialog.
 	async handleUnlinkConfirm() {
-
 		// Disconnect the user.
 		await data.set( 'core', 'user', 'disconnect' );
 
@@ -131,7 +134,7 @@ class UserMenu extends Component {
 
 		document.location = addQueryArgs( adminRoot.replace( 'admin.php', '' ),
 			{
-				'notification': 'googlesitekit_user_disconnected'
+				notification: 'googlesitekit_user_disconnected',
 			} );
 	}
 
@@ -148,7 +151,7 @@ class UserMenu extends Component {
 						text
 						onClick={ this.handleMenu }
 						icon={ picture ?
-							<i className="mdc-button__icon" aria-hidden="true"><img className="mdc-button__icon--image" src={ picture } alt={ __( 'User Avatar', 'google-site-kit' ) }/></i> :
+							<i className="mdc-button__icon" aria-hidden="true"><img className="mdc-button__icon--image" src={ picture } alt={ __( 'User Avatar', 'google-site-kit' ) } /></i> :
 							undefined
 						}
 						ariaHaspopup="menu"
@@ -162,7 +165,7 @@ class UserMenu extends Component {
 						menuOpen={ menuOpen }
 						menuItems={ [ __( 'Disconnect', 'google-site-kit' ) ] }
 						onSelected={ this.handleMenuItemSelect }
-						id="user-menu"/>
+						id="user-menu" />
 				</div>
 				<Dialog
 					dialogActive={ dialogActive }

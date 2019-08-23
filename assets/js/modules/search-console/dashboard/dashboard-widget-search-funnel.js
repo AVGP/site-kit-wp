@@ -16,16 +16,24 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import DashboardSearchFunnelInner from './dashboard-widget-search-funnel-inner';
+/**
+ * External dependencies
+ */
 import Layout from 'GoogleComponents/layout/layout';
 import DashboardModuleHeader from 'GoogleComponents/dashboard/dashboard-module-header';
 import AnalyticsInactiveCTA from 'GoogleComponents/analytics-inactive-cta';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 class DashboardSearchFunnel extends Component {
-
 	render() {
 		const { canManageOptions } = googlesitekit.permissions;
 
@@ -46,12 +54,12 @@ class DashboardSearchFunnel extends Component {
 				</div>
 				<div className={ `
 					mdc-layout-grid__cell
-					mdc-layout-grid__cell--span-${wrapperCols}
+					mdc-layout-grid__cell--span-${ wrapperCols }
 				` } >
 					<Layout className="googlesitekit-analytics-search-funnel">
 						<div className="mdc-layout-grid">
 							<div className="mdc-layout-grid__inner">
-								<DashboardSearchFunnelInner/>
+								<DashboardSearchFunnelInner />
 								{ // Show the Analytics CTA if analytics is not enabled.
 									( ! googlesitekit.modules.analytics.active ) &&
 									<div className="

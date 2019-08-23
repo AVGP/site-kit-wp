@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import GoogleSitekitSearchConsoleDashboardWidget from './dashboard/dashboard-widget';
 import GoogleSitekitSearchConsoleAdminbarWidget from './adminbar/adminbar-widget';
 import WPSearchConsoleDashboardWidget from './wp-dashboard/wp-dashboard-widget';
@@ -25,37 +28,42 @@ import DashboardDetailsWidgetKeywordsTable from './dashboard-details/dashboard-d
 import DashboardWidgetPopularKeywordsTable from './dashboard/dashboard-widget-popular-keyword-table';
 import DashboardDetailsWidgetSearchFunnel from './dashboard-details/dashboard-details-widget-search-funnel';
 import DashboardPopularity from './dashboard/dashboard-widget-popularity';
+/**
+ * External dependencies
+ */
 import PostSearcher from 'GoogleComponents/post-searcher';
 import SearchConsoleSettingStatus from './settings/search-console-settings-status';
 
 import { createAddToFilter } from 'GoogleUtil/helpers';
 import { fillFilterWithComponent } from 'GoogleUtil';
 
+/**
+ * WordPress dependencies
+ */
 import { addFilter } from '@wordpress/hooks';
 
 const slug = 'search-console';
 
 const addGoogleSitekitSearchConsoleDashboardWidget = createAddToFilter( <GoogleSitekitSearchConsoleDashboardWidget /> );
-const addGoogleSitekitSearchConsoleAdminbarWidget  = createAddToFilter( <GoogleSitekitSearchConsoleAdminbarWidget /> );
-const addWPSearchConsoleDashboardWidget            = createAddToFilter( <WPSearchConsoleDashboardWidget /> );
-const addDashboardSearchFunnel                     = createAddToFilter( <DashboardSearchFunnel /> );
-const addSearchConsoleDashboardWidgetTopLevel      = createAddToFilter( <SearchConsoleDashboardWidgetTopLevel /> );
+const addGoogleSitekitSearchConsoleAdminbarWidget = createAddToFilter( <GoogleSitekitSearchConsoleAdminbarWidget /> );
+const addWPSearchConsoleDashboardWidget = createAddToFilter( <WPSearchConsoleDashboardWidget /> );
+const addDashboardSearchFunnel = createAddToFilter( <DashboardSearchFunnel /> );
+const addSearchConsoleDashboardWidgetTopLevel = createAddToFilter( <SearchConsoleDashboardWidgetTopLevel /> );
 
-const addDashboardDetailsSearchFunnel              = createAddToFilter( <DashboardDetailsWidgetSearchFunnel /> );
-const addDashboardDetailsKeywords                  = createAddToFilter( <DashboardDetailsWidgetKeywordsTable /> );
-const addDashboardPopularKeywords                  = createAddToFilter( <DashboardWidgetPopularKeywordsTable /> );
-const addDashboardPopularity                       = createAddToFilter( <DashboardPopularity /> );
-const addPostSearcher                              = createAddToFilter( <PostSearcher /> );
+const addDashboardDetailsSearchFunnel = createAddToFilter( <DashboardDetailsWidgetSearchFunnel /> );
+const addDashboardDetailsKeywords = createAddToFilter( <DashboardDetailsWidgetKeywordsTable /> );
+const addDashboardPopularKeywords = createAddToFilter( <DashboardWidgetPopularKeywordsTable /> );
+const addDashboardPopularity = createAddToFilter( <DashboardPopularity /> );
+const addPostSearcher = createAddToFilter( <PostSearcher /> );
 
 /**
  * Add components to the settings page.
  */
-addFilter( `googlesitekit.ModuleSettingsDetails-${slug}`,
+addFilter( `googlesitekit.ModuleSettingsDetails-${ slug }`,
 	'googlesitekit.SearchConsoleModuleSettingsDetails',
 	fillFilterWithComponent( SearchConsoleSettingStatus, {
 		onSettingsPage: true,
 	} ) );
-
 
 /**
 * Add components to the Site Kit Dashboard.

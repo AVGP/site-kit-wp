@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import DataBlock from 'GoogleComponents/data-block.js';
 import withData from 'GoogleComponents/higherorder/withdata';
 import {
@@ -23,6 +26,9 @@ import {
 	prepareSecondsForDisplay,
 	readableLargeNumber,
 } from 'GoogleUtil';
+/**
+ * Internal dependencies
+ */
 import {
 	calculateOverviewData,
 	isDataZeroForReporting,
@@ -31,11 +37,13 @@ import {
 import PreviewBlock from 'GoogleComponents/preview-block';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 import { Component } from '@wordpress/element';
 
 class AnalyticsDashboardWidgetOverview extends Component {
-
 	render() {
 		const { data, selectedStats, handleStatSelection } = this.props;
 
@@ -57,7 +65,7 @@ class AnalyticsDashboardWidgetOverview extends Component {
 			totalUsersChange,
 			totalSessionsChange,
 			averageBounceRateChange,
-			averageSessionDurationChange
+			averageSessionDurationChange,
 		} = overviewData;
 
 		const dataBlocks = [
@@ -69,7 +77,7 @@ class AnalyticsDashboardWidgetOverview extends Component {
 				changeDataUnit: '%',
 				context: 'button',
 				selected: selectedStats.includes( 0 ),
-				handleStatSelection: handleStatSelection,
+				handleStatSelection,
 			},
 			{
 				className: 'googlesitekit-data-block--sessions googlesitekit-data-block--button-2',
@@ -79,7 +87,7 @@ class AnalyticsDashboardWidgetOverview extends Component {
 				changeDataUnit: '%',
 				context: 'button',
 				selected: selectedStats.includes( 1 ),
-				handleStatSelection: handleStatSelection,
+				handleStatSelection,
 			},
 			{
 				className: 'googlesitekit-data-block--bounce googlesitekit-data-block--button-3',
@@ -89,7 +97,7 @@ class AnalyticsDashboardWidgetOverview extends Component {
 				changeDataUnit: '%',
 				context: 'button',
 				selected: selectedStats.includes( 2 ),
-				handleStatSelection: handleStatSelection,
+				handleStatSelection,
 				datapointUnit: '%',
 				reverseArrowDirection: true,
 			},
@@ -101,7 +109,7 @@ class AnalyticsDashboardWidgetOverview extends Component {
 				changeDataUnit: '%',
 				context: 'button',
 				selected: selectedStats.includes( 3 ),
-				handleStatSelection: handleStatSelection,
+				handleStatSelection,
 			},
 		];
 
@@ -156,9 +164,9 @@ export default withData(
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Single', 'Dashboard' ],
-		}
+		},
 	],
-	<PreviewBlock width='100%' height='190px' padding />,
+	<PreviewBlock width="100%" height="190px" padding />,
 	{ createGrid: true },
 	isDataZeroForReporting,
 	getAnalyticsErrorMessageFromData

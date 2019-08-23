@@ -16,17 +16,22 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import { fillFilterWithComponent } from 'GoogleUtil';
 import TagmanagerSetup from 'GoogleModules/tagmanager/setup';
+/**
+ * WordPress dependencies
+ */
 import { addFilter } from '@wordpress/hooks';
 const slug = 'tagmanager';
 
 if ( googlesitekit.modules.tagmanager.active ) {
-
 	/**
 	 * Add components to the settings page.
 	 */
-	addFilter( `googlesitekit.ModuleSettingsDetails-${slug}`,
+	addFilter( `googlesitekit.ModuleSettingsDetails-${ slug }`,
 		'googlesitekit.TagmanagerModuleSettingsDetails',
 		fillFilterWithComponent( TagmanagerSetup, {
 			onSettingsPage: true,
@@ -35,7 +40,7 @@ if ( googlesitekit.modules.tagmanager.active ) {
 	/**
 	 * Add component to the setup wizard
 	 */
-	addFilter( `googlesitekit.ModuleSetup-${slug}`,
+	addFilter( `googlesitekit.ModuleSetup-${ slug }`,
 		'googlesitekit.TagmanagerModuleSetupWizard',
 		fillFilterWithComponent( TagmanagerSetup, {
 			onSettingsPage: false,

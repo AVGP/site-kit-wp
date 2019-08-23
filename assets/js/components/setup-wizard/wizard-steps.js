@@ -16,48 +16,54 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import WizardStepClientCredentials from 'GoogleComponents/setup-wizard/wizard-step-client-credentials';
 import WizardStepAuthentication from 'GoogleComponents/setup-wizard/wizard-step-authentication';
 import WizardStepVerification from 'GoogleComponents/setup-wizard/wizard-step-verification';
 import WizardStepSearchConsoleProperty from 'GoogleComponents/setup-wizard/wizard-step-search-console-property';
 import WizardStepCompleteSetup from 'GoogleComponents/setup-wizard/wizard-step-complete-setup';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 
 const STEPS = {
 	clientCredentials: {
 		title: __( 'Create Client ID', 'google-site-kit' ),
 		required: true,
-		isApplicable: props => props.canSetup && ( ! props.isSiteKitConnected || ! props.hasSearchConsolePropertyFromTheStart ),
-		isCompleted: props => props.isSiteKitConnected,
+		isApplicable: ( props ) => props.canSetup && ( ! props.isSiteKitConnected || ! props.hasSearchConsolePropertyFromTheStart ),
+		isCompleted: ( props ) => props.isSiteKitConnected,
 		Component: WizardStepClientCredentials,
 	},
 	authentication: {
 		title: __( 'Authenticate', 'google-site-kit' ),
 		required: true,
 		isApplicable: () => true,
-		isCompleted: props => props.isSiteKitConnected && props.isAuthenticated && ! props.needReauthenticate,
+		isCompleted: ( props ) => props.isSiteKitConnected && props.isAuthenticated && ! props.needReauthenticate,
 		Component: WizardStepAuthentication,
 	},
 	verification: {
 		title: __( 'Verify URL', 'google-site-kit' ),
 		required: true,
 		isApplicable: () => true,
-		isCompleted: props => props.isSiteKitConnected && props.isAuthenticated && props.isVerified,
+		isCompleted: ( props ) => props.isSiteKitConnected && props.isAuthenticated && props.isVerified,
 		Component: WizardStepVerification,
 	},
 	seachConsoleProperty: {
 		title: __( 'Connect Search Console', 'google-site-kit' ),
 		required: true,
 		isApplicable: () => true,
-		isCompleted: props => props.isSiteKitConnected && props.isAuthenticated && props.isVerified && props.hasSearchConsoleProperty,
+		isCompleted: ( props ) => props.isSiteKitConnected && props.isAuthenticated && props.isVerified && props.hasSearchConsoleProperty,
 		Component: WizardStepSearchConsoleProperty,
 	},
 	completeSetup: {
 		title: __( 'Finish', 'google-site-kit' ),
 		required: false,
 		isApplicable: () => true,
-		isCompleted: props => props.isSiteKitConnected && props.isAuthenticated && props.isVerified && props.hasSearchConsoleProperty,
+		isCompleted: ( props ) => props.isSiteKitConnected && props.isAuthenticated && props.isVerified && props.hasSearchConsoleProperty,
 		Component: WizardStepCompleteSetup,
 	},
 };

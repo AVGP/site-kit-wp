@@ -16,15 +16,23 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import AnalyticsDashboardWidgetTopAcquisitionSources from '../dashboard/dashboard-widget-top-acquisition-sources-table';
+/**
+ * External dependencies
+ */
 import Layout from 'GoogleComponents/layout/layout';
 import DashboardAcquisitionPieChart from '../dashboard/dashboard-widget-acquisition-piechart';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 class AnalyticsDashboardDetailsWidgetTopAcquisitionSources extends Component {
-
 	render() {
 		return (
 			<Fragment>
@@ -50,7 +58,7 @@ class AnalyticsDashboardDetailsWidgetTopAcquisitionSources extends Component {
 									mdc-layout-grid__cell--span-8-tablet
 									mdc-layout-grid__cell--span-4-phone
 								">
-									<DashboardAcquisitionPieChart/>
+									<DashboardAcquisitionPieChart />
 								</div>
 								<div className="
 									mdc-layout-grid__cell
@@ -58,7 +66,7 @@ class AnalyticsDashboardDetailsWidgetTopAcquisitionSources extends Component {
 									mdc-layout-grid__cell--span-8-tablet
 									mdc-layout-grid__cell--span-4-phone
 								">
-									<AnalyticsDashboardWidgetTopAcquisitionSources/>
+									<AnalyticsDashboardWidgetTopAcquisitionSources />
 								</div>
 							</div>
 						</div>

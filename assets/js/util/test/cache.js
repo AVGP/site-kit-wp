@@ -10,7 +10,7 @@ const valuesToTest = [
 		'testdata',
 		'testdata',
 		true,
-		true
+		true,
 	],
 	[
 		'sessionStorage',
@@ -18,7 +18,7 @@ const valuesToTest = [
 		'testdata',
 		'testdata',
 		true,
-		true
+		true,
 	],
 	[
 		'nonExistantStorage',
@@ -26,13 +26,12 @@ const valuesToTest = [
 		'testdata',
 		undefined,
 		undefined,
-		undefined
-	]
+		undefined,
+	],
 ];
 
 describe( 'setCache / deleteCache / getCache', () => {
 	it.each( valuesToTest )( 'should handle cache type %s appropriately', ( cacheType, cacheKey, data, expected, deleteExpected, setCacheExpected ) => {
-
 		// Test setCache.
 		const setCacheResult = setCache( cacheType, cacheKey, data );
 		expect( setCacheResult ).toStrictEqual( setCacheExpected );

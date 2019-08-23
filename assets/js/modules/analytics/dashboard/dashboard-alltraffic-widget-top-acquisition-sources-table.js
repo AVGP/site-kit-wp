@@ -16,18 +16,23 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import withData from 'GoogleComponents/higherorder/withdata';
 import { getTimeInSeconds } from 'GoogleUtil';
 import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/data-table';
 import MiniChart from 'GoogleComponents/mini-chart';
 import PreviewTable from 'GoogleComponents/preview-table';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 import { map } from 'lodash';
 import { Component, Fragment } from '@wordpress/element';
 
 class AnalyticsAllTrafficDashboardWidgetTopAcquisitionSources extends Component {
-
 	render() {
 		const { data } = this.props;
 		if ( ! data || ! data.length ) {
@@ -40,20 +45,20 @@ class AnalyticsAllTrafficDashboardWidgetTopAcquisitionSources extends Component 
 			},
 			{
 				title: __( 'Percent', 'google-site-kit' ),
-			}
+			},
 		];
 
-		const totalSessions = data[0].data.totals[0].values[0];
+		const totalSessions = data[ 0 ].data.totals[ 0 ].values[ 0 ];
 
-		const dataMapped = map( data[0].data.rows, ( row, i ) => {
-			const percent = ( row.metrics[0].values[0] / totalSessions * 100 );
+		const dataMapped = map( data[ 0 ].data.rows, ( row, i ) => {
+			const percent = ( row.metrics[ 0 ].values[ 0 ] / totalSessions * 100 );
 
 			// Exclude sources below 1%.
 			if ( 1 > percent ) {
 				return false;
 			}
 			return [
-				row.dimensions[0],
+				row.dimensions[ 0 ],
 				<Fragment key={ 'minichart-' + i }><div className="googlesitekit-table__body-item-chart-wrap">{ `${ percent.toFixed( 2 ) }%` } <MiniChart percent={ percent.toFixed( 1 ) } index={ i } /></div></Fragment>,
 			];
 		} );
@@ -85,7 +90,7 @@ export default withData(
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: 'Dashboard',
-		}
+		},
 	],
 	<PreviewTable
 		rows={ 3 }

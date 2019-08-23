@@ -16,20 +16,27 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import GoogleChart from 'GoogleComponents/google-chart.js';
 import { getSiteKitAdminURL, getTimeInSeconds } from 'GoogleUtil';
 import withData from 'GoogleComponents/higherorder/withdata';
-import { extractAnalyticsDataForTrafficChart } from '../util';
+/**
+ * Internal dependencies
+ */
 import PropTypes from 'prop-types';
 import Link from 'GoogleComponents/link';
 import PreviewBlock from 'GoogleComponents/preview-block';
-import { getAnalyticsErrorMessageFromData, isDataZeroForTrafficSources } from '../util';
+import { extractAnalyticsDataForTrafficChart, getAnalyticsErrorMessageFromData, isDataZeroForTrafficSources } from '../util';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 class DashboardAcquisitionPieChart extends Component {
-
 	render() {
 		const {
 			data,
@@ -53,7 +60,7 @@ class DashboardAcquisitionPieChart extends Component {
 				textStyle: {
 					color: '#5b5b61',
 					fontSize: 12,
-				}
+				},
 			},
 			slices: {
 				0: { color: '#178EC5' },
@@ -93,11 +100,11 @@ class DashboardAcquisitionPieChart extends Component {
 }
 
 DashboardAcquisitionPieChart.defaultProps = {
-	source: false
+	source: false,
 };
 
 DashboardAcquisitionPieChart.propTypes = {
-	source: PropTypes.bool
+	source: PropTypes.bool,
 };
 
 export default withData(
@@ -111,7 +118,7 @@ export default withData(
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Dashboard', 'Single' ],
-		}
+		},
 	],
 	<PreviewBlock width="282px" height="282px" shape="circular" />,
 	{},

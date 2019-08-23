@@ -16,25 +16,29 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import DataBlock from 'GoogleComponents/data-block.js';
 import withData from 'GoogleComponents/higherorder/withdata';
 import PreviewBlock from 'GoogleComponents/preview-block';
 import { getTimeInSeconds } from 'GoogleUtil';
+/**
+ * Internal dependencies
+ */
 import {
 	extractSearchConsoleDashboardData,
 	isDataZeroSearchConsole,
 } from './util';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 import { Component, Fragment } from '@wordpress/element';
 
 class SearchConsoleDashboardWidgetOverview extends Component {
-
-	constructor( props ) {
-		super( props );
-	}
-
 	render() {
 		const { data, selectedStats, handleStatSelection } = this.props;
 
@@ -63,7 +67,7 @@ class SearchConsoleDashboardWidgetOverview extends Component {
 				changeDataUnit: '%',
 				context: 'button',
 				selected: selectedStats.includes( 0 ),
-				handleStatSelection: handleStatSelection,
+				handleStatSelection,
 			},
 			{
 				className: 'googlesitekit-data-block--impressions googlesitekit-data-block--button-2',
@@ -73,7 +77,7 @@ class SearchConsoleDashboardWidgetOverview extends Component {
 				changeDataUnit: '%',
 				context: 'button',
 				selected: selectedStats.includes( 1 ),
-				handleStatSelection: handleStatSelection,
+				handleStatSelection,
 			},
 			{
 				className: 'googlesitekit-data-block--ctr googlesitekit-data-block--button-3',
@@ -83,7 +87,7 @@ class SearchConsoleDashboardWidgetOverview extends Component {
 				changeDataUnit: '%',
 				context: 'button',
 				selected: selectedStats.includes( 2 ),
-				handleStatSelection: handleStatSelection,
+				handleStatSelection,
 			},
 			{
 				className: 'googlesitekit-data-block--position googlesitekit-data-block--button-4',
@@ -93,7 +97,7 @@ class SearchConsoleDashboardWidgetOverview extends Component {
 				changeDataUnit: '%',
 				context: 'button',
 				selected: selectedStats.includes( 3 ),
-				handleStatSelection: handleStatSelection,
+				handleStatSelection,
 			},
 		];
 
@@ -148,9 +152,9 @@ export default withData(
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Single', 'Dashboard' ],
-		}
+		},
 	],
-	<PreviewBlock width='100%' height='190px' padding />,
+	<PreviewBlock width="100%" height="190px" padding />,
 	{ createGrid: true },
 	isDataZeroSearchConsole
 );

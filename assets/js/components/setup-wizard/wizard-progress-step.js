@@ -16,10 +16,16 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import SvgIcon from 'GoogleUtil/svg-icon';
 import React from 'react';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class WizardProgressStep extends Component {
@@ -44,15 +50,15 @@ class WizardProgressStep extends Component {
 		/* @TODO We need to set these statuses dynamically. */
 		let statusIcon = false;
 		switch ( statusClass ) {
-				case 'warning':
-					statusIcon = <SvgIcon id="exclamation" height="12" width="2"/>;
-					break;
-				case 'error':
-					statusIcon = <SvgIcon id="exclamation" height="12" width="2"/>;
-					break;
-				case 'completed':
-					statusIcon = <SvgIcon id="check" height="12" width="16"/>;
-					break;
+			case 'warning':
+				statusIcon = <SvgIcon id="exclamation" height="12" width="2" />;
+				break;
+			case 'error':
+				statusIcon = <SvgIcon id="exclamation" height="12" width="2" />;
+				break;
+			case 'completed':
+				statusIcon = <SvgIcon id="check" height="12" width="16" />;
+				break;
 		}
 
 		return (

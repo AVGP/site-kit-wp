@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
 import { withFilters } from '@wordpress/components';
 import { Component, Fragment } from '@wordpress/element';
 
 class AdminbarModules extends Component {
-
-
 	render() {
-
 		return (
 			<Fragment />
 		);

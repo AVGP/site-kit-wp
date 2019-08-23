@@ -16,25 +16,30 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PreviewBlock from 'GoogleComponents/preview-block';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class PreviewTable extends Component {
-
 	render() {
 		const {
 			rows,
 			rowHeight,
 			padding,
 		} = this.props;
-		let rowData = [];
+		const rowData = [];
 		for ( let x = 0; rows > x; x++ ) {
 			rowData.push(
 				<div className="googlesitekit-preview-table__row" key={ 'table-row-' + x }>
 					<PreviewBlock
-						width='100%'
+						width="100%"
 						height={ rowHeight + 'px' }
 					/>
 				</div>

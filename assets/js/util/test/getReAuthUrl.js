@@ -8,26 +8,26 @@ const valuesToTest = [
 		'pagespeed-insights',
 		false,
 		false,
-		'http://sitekit.withgoogle.com/wp-admin/admin.php?page=googlesitekit-dashboard&reAuth=false&slug=pagespeed-insights'
+		'http://sitekit.withgoogle.com/wp-admin/admin.php?page=googlesitekit-dashboard&reAuth=false&slug=pagespeed-insights',
 	],
 	[
 		'pagespeed-insights',
 		true,
 		false,
-		'http://sitekit.withgoogle.com/wp-admin/admin.php?page=googlesitekit-module-pagespeed-insights&reAuth=false&slug=pagespeed-insights'
+		'http://sitekit.withgoogle.com/wp-admin/admin.php?page=googlesitekit-module-pagespeed-insights&reAuth=false&slug=pagespeed-insights',
 	],
 	[
 		'pagespeed-insights',
 		false,
 		'abc123',
-		'http://sitekit.withgoogle.com/wp-admin/admin.php?page=googlesitekit-dashboard&reAuth=false&slug=pagespeed-insights'
+		'http://sitekit.withgoogle.com/wp-admin/admin.php?page=googlesitekit-dashboard&reAuth=false&slug=pagespeed-insights',
 	],
 	[
 		'pagespeed-insights',
 		true,
 		'abc123',
-		'http://sitekit.withgoogle.com/wp-admin/admin.php?page=googlesitekit-module-pagespeed-insights&reAuth=false&slug=pagespeed-insights'
-	]
+		'http://sitekit.withgoogle.com/wp-admin/admin.php?page=googlesitekit-module-pagespeed-insights&reAuth=false&slug=pagespeed-insights',
+	],
 ];
 
 // Disable reason: Needs investigation.
@@ -39,5 +39,4 @@ describe.skip( 'getReAuthUrl', () => {
 		expect( getReAuthUrl( slug, status ) ).toStrictEqual( expected );
 	} );
 } );
-
 

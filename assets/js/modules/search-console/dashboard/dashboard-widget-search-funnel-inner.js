@@ -16,11 +16,13 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
 import { withFilters } from '@wordpress/components';
 import { Component } from '@wordpress/element';
 
 class DashboardSearchFunnelInner extends Component {
-
 	render() {
 		return null;
 	}

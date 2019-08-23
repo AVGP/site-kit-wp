@@ -16,12 +16,17 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class PreviewBlock extends Component {
-
 	render() {
 		const {
 			width,

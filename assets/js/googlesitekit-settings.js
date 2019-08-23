@@ -17,16 +17,21 @@
  */
 /* eslint camelcase:[0] */
 
+/**
+ * External dependencies
+ */
 import SettingsApp from 'GoogleComponents/settings/settings-app';
-import { addPerformanceMonitoring }  from 'GoogleUtil';
+import { addPerformanceMonitoring } from 'GoogleUtil';
 import Notification from 'GoogleComponents/notifications/notification';
 
+/**
+ * WordPress dependencies
+ */
 import { setLocaleData } from '@wordpress/i18n';
 import { doAction } from '@wordpress/hooks';
 import { Component, render } from '@wordpress/element';
 
 class GoogleSitekitSettings extends Component {
-
 	constructor( props ) {
 		super( props );
 		this.state = { hasError: false };
@@ -79,7 +84,6 @@ class GoogleSitekitSettings extends Component {
 wp.domReady( function() {
 	const settingsWrapper = document.getElementById( 'googlesitekit-settings-wrapper' );
 	if ( null !== settingsWrapper ) {
-
 		// Render the Settings App.
 		render( <GoogleSitekitSettings />, settingsWrapper );
 
@@ -88,5 +92,4 @@ wp.domReady( function() {
 		 */
 		doAction( 'googlesitekit.moduleLoaded', 'Settings' );
 	}
-
 } );

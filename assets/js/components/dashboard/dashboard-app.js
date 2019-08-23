@@ -16,25 +16,33 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import DashboardMain from './dashboard-main';
+/**
+ * External dependencies
+ */
 import Header from 'GoogleComponents/header';
 import DashboardNotifications from './dashboard-notifications';
 import 'GoogleComponents/publisher-wins';
 import 'GoogleComponents/notifications';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element';
 
 class DashboardApp extends Component {
-
 	render() {
 		return (
 			<Fragment>
-				<Header/>
+				<Header />
 				<DashboardNotifications />
 				<div className="googlesitekit-module-page">
 					<div className="mdc-layout-grid">
 						<div className="mdc-layout-grid__inner">
-							<DashboardMain/>
+							<DashboardMain />
 						</div>
 					</div>
 				</div>

@@ -16,19 +16,27 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import DashboardAcquisitionPieChart from './dashboard-widget-acquisition-piechart';
 import AnalyticsAllTrafficDashboardWidgetTopAcquisitionSources from './dashboard-alltraffic-widget-top-acquisition-sources-table';
+/**
+ * External dependencies
+ */
 import Layout from 'GoogleComponents/layout/layout';
 import DashboardModuleHeader from 'GoogleComponents/dashboard/dashboard-module-header';
 import getNoDataComponent from 'GoogleComponents/notifications/nodata';
 import getDataErrorComponent from 'GoogleComponents/notifications/data-error';
 import getSetupIncompleteComponent from 'GoogleComponents/notifications/setup-incomplete';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 class AnalyticsAllTraffic extends Component {
-
 	constructor( props ) {
 		super( props );
 		this.state = {
@@ -52,7 +60,7 @@ class AnalyticsAllTraffic extends Component {
 	handleDataError( error ) {
 		this.setState( {
 			receivingData: false,
-			error
+			error,
 		} );
 	}
 
@@ -90,7 +98,7 @@ class AnalyticsAllTraffic extends Component {
 			receivingData,
 		} = this.state;
 
-		const dataError   = ( error || ! receivingData );
+		const dataError = ( error || ! receivingData );
 		const wrapperClass = dataError ? 'googlesitekit-nodata' : '';
 
 		return (
@@ -99,7 +107,7 @@ class AnalyticsAllTraffic extends Component {
 					mdc-layout-grid__cell
 					mdc-layout-grid__cell--span-12
 				` }>
-					<DashboardModuleHeader timePeriod={ __( 'Last 28 days', 'google-site-kit' ) } description={ __( 'How people found your site.', 'google-site-kit' ) } title={ __( 'All Traffic', 'google-site-kit' ) }/>
+					<DashboardModuleHeader timePeriod={ __( 'Last 28 days', 'google-site-kit' ) } description={ __( 'How people found your site.', 'google-site-kit' ) } title={ __( 'All Traffic', 'google-site-kit' ) } />
 
 				</div>
 				{ this.getErrorDataComponent() }
@@ -129,7 +137,7 @@ class AnalyticsAllTraffic extends Component {
 									mdc-layout-grid__cell--span-4-tablet
 									mdc-layout-grid__cell--span-4-phone
 								">
-									<AnalyticsAllTrafficDashboardWidgetTopAcquisitionSources/>
+									<AnalyticsAllTrafficDashboardWidgetTopAcquisitionSources />
 								</div>
 							</div>
 						</div>

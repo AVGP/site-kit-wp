@@ -16,13 +16,18 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PreviewBlock from 'GoogleComponents/preview-block';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class PreviewBlocks extends Component {
-
 	render() {
 		const {
 			width,
@@ -31,7 +36,7 @@ class PreviewBlocks extends Component {
 			count,
 		} = this.props;
 
-		let toReturn = [];
+		const toReturn = [];
 		let i = 0;
 		while ( i++ < count ) {
 			toReturn.push(

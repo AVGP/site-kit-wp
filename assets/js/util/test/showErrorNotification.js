@@ -1,8 +1,11 @@
 /**
  * External dependencies
  */
-import { applyFilters } from '@wordpress/hooks';
 import { render } from 'enzyme';
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks';
 
 /**
  * Internal dependencies

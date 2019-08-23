@@ -16,13 +16,22 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import withData from 'GoogleComponents/higherorder/withdata';
 import { getTimeInSeconds, numberFormat } from 'GoogleUtil';
 import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/data-table';
 import PreviewTable from 'GoogleComponents/preview-table';
 import Layout from 'GoogleComponents/layout/layout';
+/**
+ * Internal dependencies
+ */
 import { isDataZeroForReporting } from '../util';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 import { map } from 'lodash';
 import { Component } from '@wordpress/element';
@@ -61,17 +70,17 @@ class AnalyticsDashboardWidgetPopularPagesTable extends Component {
 			},
 			{
 				title: __( 'Views', 'google-site-kit' ),
-			}
+			},
 		];
 
-		let links = [];
-		const dataMapped = map( data[0].data.rows, ( row, i ) => {
-			const url = row.dimensions[0];
-			const title = row.dimensions[1];
+		const links = [];
+		const dataMapped = map( data[ 0 ].data.rows, ( row, i ) => {
+			const url = row.dimensions[ 0 ];
+			const title = row.dimensions[ 1 ];
 			links[ i ] = url;
 			return [
 				title,
-				numberFormat( row.metrics[0].values[0] ),
+				numberFormat( row.metrics[ 0 ].values[ 0 ] ),
 			];
 		} );
 
@@ -103,8 +112,8 @@ export default withData(
 			datapoint: 'top-pages',
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
-			context: [ 'Single', 'Dashboard' ]
-		}
+			context: [ 'Single', 'Dashboard' ],
+		},
 	],
 	AnalyticsDashboardWidgetPopularPagesTable.renderLayout(
 		<PreviewTable padding />

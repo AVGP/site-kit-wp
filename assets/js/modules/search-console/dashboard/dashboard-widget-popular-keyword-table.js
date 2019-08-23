@@ -16,15 +16,24 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import withData from 'GoogleComponents/higherorder/withdata';
 import { getTimeInSeconds, numberFormat } from 'GoogleUtil';
 import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/data-table';
 import PreviewTable from 'GoogleComponents/preview-table';
 import Layout from 'GoogleComponents/layout/layout';
+/**
+ * Internal dependencies
+ */
 import {
 	isDataZeroSearchConsole,
 } from '../dashboard/util';
 
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n';
 import { map } from 'lodash';
 import { Component } from '@wordpress/element';
@@ -62,17 +71,17 @@ class DashboardWidgetPopularKeywordsTable extends Component {
 		const headers = [
 			{
 				title: __( 'Top search queries for your site', 'google-site-kit' ),
-				tooltip: __( 'Most searched for keywords related to your content', 'google-site-kit' )
+				tooltip: __( 'Most searched for keywords related to your content', 'google-site-kit' ),
 			},
 			{
 				title: __( 'Impressions', 'google-site-kit' ),
-				tooltip: __( 'Counted each time your content appears in search results', 'google-site-kit' )
-			}
+				tooltip: __( 'Counted each time your content appears in search results', 'google-site-kit' ),
+			},
 		];
 		const domain = googlesitekit.admin.siteURL;
-		let links = [];
+		const links = [];
 		const dataMapped = map( data, ( row, i ) => {
-			const query = row.keys[0];
+			const query = row.keys[ 0 ];
 			links[ i ] = sprintf(
 				'https://search.google.com/search-console/performance/search-analytics?resource_id=%s&query=!%s&num_of_days=28',
 				domain,
@@ -80,7 +89,7 @@ class DashboardWidgetPopularKeywordsTable extends Component {
 			);
 			return [
 				query,
-				numberFormat( row.impressions )
+				numberFormat( row.impressions ),
 			];
 		} );
 
@@ -112,7 +121,7 @@ export default withData(
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Dashboard' ],
-		}
+		},
 	],
 	DashboardWidgetPopularKeywordsTable.renderLayout(
 		<PreviewTable padding />

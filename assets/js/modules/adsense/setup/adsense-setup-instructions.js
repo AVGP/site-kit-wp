@@ -16,15 +16,24 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import SvgIcon from 'GoogleUtil/svg-icon';
 import Link from 'GoogleComponents/link';
 import Button from 'GoogleComponents/button';
+/**
+ * Internal dependencies
+ */
 import AdSenseSettings from '../settings/adsense-settings';
 import data from 'GoogleComponents/data';
 import Spinner from 'GoogleComponents/spinner';
 import { Fragment } from 'react';
 import { sendAnalyticsTrackingEvent } from 'GoogleUtil';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -75,7 +84,7 @@ class AdSenseSetupInstructions extends Component {
 				<div className="googlesitekit-setup-module__step">
 					{ issue &&
 						<p className="googlesitekit-setup__notice">
-							<SvgIcon id="error" height="20" width="23"/>
+							<SvgIcon id="error" height="20" width="23" />
 							<span className="googlesitekit-setup__notice-text">{ issue }</span>
 						</p>
 					}
@@ -157,7 +166,7 @@ class AdSenseSetupInstructions extends Component {
 								>
 									{ ctaLinkText }
 								</Button>
-								<Spinner isSaving={ isSaving }/>
+								<Spinner isSaving={ isSaving } />
 							</Fragment> :
 							<Link
 								external

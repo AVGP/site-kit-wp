@@ -16,11 +16,16 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import DashboardDetailsModule from './dashboard-details-module';
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class DashboardDetailsModules extends Component {
-
 	render() {
 		return (
 			<DashboardDetailsModule

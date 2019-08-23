@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import Button from 'GoogleComponents/button';
 import Link from 'GoogleComponents/link';
 import data from 'GoogleComponents/data';
@@ -25,12 +28,14 @@ import SvgIcon from 'GoogleUtil/svg-icon';
 import PropTypes from 'prop-types';
 import { toggleConfirmModuleSettings } from 'GoogleUtil';
 
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n';
 import { Component, Fragment } from '@wordpress/element';
 import { addFilter, removeFilter } from '@wordpress/hooks';
 
 class TagmanagerSetup extends Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -56,7 +61,6 @@ class TagmanagerSetup extends Component {
 		this.handleAccountChange = this.handleAccountChange.bind( this );
 		this.handleContainerChange = this.handleContainerChange.bind( this );
 		this.refetchAccount = this.refetchAccount.bind( this );
-
 	}
 
 	componentDidMount() {
@@ -99,7 +103,6 @@ class TagmanagerSetup extends Component {
 	 * Toggle confirm changes button disable/enable depending on the changed settings.
 	 */
 	toggleConfirmChangesButton() {
-
 		if ( ! this.props.isEditing ) {
 			return;
 		}
@@ -116,7 +119,6 @@ class TagmanagerSetup extends Component {
 	 * Request Tag Manager accounts.
 	 */
 	async requestTagManagerAccounts() {
-
 		try {
 			const {
 				selectedAccount,
@@ -127,20 +129,20 @@ class TagmanagerSetup extends Component {
 				accountId: selectedAccount,
 			};
 
-			let errorCode    = false;
-			let errorMsg     = '';
-			let responseData = await data.get( 'modules', 'tagmanager', 'list-accounts', queryArgs, false );
+			let errorCode = false;
+			let errorMsg = '';
+			const responseData = await data.get( 'modules', 'tagmanager', 'list-accounts', queryArgs, false );
 
 			// Verify if user has access to the selected account.
-			if ( selectedAccount && ! responseData.accounts.find( account => account.accountId === selectedAccount ) ) {
+			if ( selectedAccount && ! responseData.accounts.find( ( account ) => account.accountId === selectedAccount ) ) {
 				data.deleteCache( 'tagmanager', 'list-accounts' );
 				errorCode = 'insufficientPermissions';
-				errorMsg  = __( 'You currently don\'t have access to this Google Tag Manager account. You can either request access from your team, or remove this Google Tag Manager snippet and connect to a different account.', 'google-site-kit' );
+				errorMsg = __( 'You currently don\'t have access to this Google Tag Manager account. You can either request access from your team, or remove this Google Tag Manager snippet and connect to a different account.', 'google-site-kit' );
 			}
 
 			const chooseContainer = {
 				containerId: 0,
-				publicId: 0
+				publicId: 0,
 			};
 			responseData.containers.push( chooseContainer );
 
@@ -148,9 +150,9 @@ class TagmanagerSetup extends Component {
 				this.setState( {
 					isLoading: false,
 					accounts: responseData.accounts,
-					selectedAccount: ( selectedAccount ) ? selectedAccount : responseData.accounts[0].accountId,
+					selectedAccount: ( selectedAccount ) ? selectedAccount : responseData.accounts[ 0 ].accountId,
 					containers: responseData.containers,
-					selectedContainer: ( selectedContainer ) ? selectedContainer : responseData.containers[0].publicId,
+					selectedContainer: ( selectedContainer ) ? selectedContainer : responseData.containers[ 0 ].publicId,
 					refetch: false,
 					errorCode,
 					errorMsg,
@@ -179,18 +181,18 @@ class TagmanagerSetup extends Component {
 				accountId: selectedAccount,
 			};
 
-			let responseData = await data.get( 'modules', 'tagmanager', 'list-containers', queryArgs );
+			const responseData = await data.get( 'modules', 'tagmanager', 'list-containers', queryArgs );
 
 			const chooseContainer = {
 				containerId: 0,
-				publicId: 0
+				publicId: 0,
 			};
 			responseData.containers.push( chooseContainer );
 			if ( this._isMounted ) {
 				this.setState( {
 					containersLoading: false,
 					containers: responseData.containers,
-					selectedContainer: responseData.containers[0].publicId,
+					selectedContainer: responseData.containers[ 0 ].publicId,
 					errorCode: false,
 				} );
 			}
@@ -207,7 +209,7 @@ class TagmanagerSetup extends Component {
 	async handleSubmit() {
 		const {
 			selectedAccount,
-			selectedContainer
+			selectedContainer,
 		} = this.state;
 
 		const { finishSetup } = this.props;
@@ -230,16 +232,15 @@ class TagmanagerSetup extends Component {
 
 			if ( this._isMounted ) {
 				this.setState( {
-					isSaving: false
+					isSaving: false,
 				} );
 			}
-
 		} catch ( err ) {
 			if ( this._isMounted ) {
 				this.setState( {
 					isLoading: false,
 					errorCode: err.code,
-					errorMsg: err.message
+					errorMsg: err.message,
 				} );
 			}
 
@@ -286,7 +287,6 @@ class TagmanagerSetup extends Component {
 				selectedContainer: selectValue,
 			} );
 		}
-
 	}
 
 	refetchAccount( e ) {
@@ -308,7 +308,7 @@ class TagmanagerSetup extends Component {
 		} = this.state;
 
 		if ( isLoading ) {
-			return <ProgressBar/>;
+			return <ProgressBar />;
 		}
 
 		return (
@@ -350,7 +350,7 @@ class TagmanagerSetup extends Component {
 		} = this.props;
 
 		if ( isLoading ) {
-			return <ProgressBar/>;
+			return <ProgressBar />;
 		}
 
 		if ( 0 >= accounts.length ) {
@@ -373,13 +373,13 @@ class TagmanagerSetup extends Component {
 				<div className="googlesitekit-setup-module__inputs">
 					<Select
 						enhanced
-						name='accounts'
+						name="accounts"
 						label={ __( 'Account', 'google-site-kit' ) }
 						value={ selectedAccount }
 						onEnhancedChange={ this.handleAccountChange }
 						outlined
 					>
-						{ accounts.map( account =>
+						{ accounts.map( ( account ) =>
 							<Option
 								key={ account.accountId }
 								value={ account.accountId }>
@@ -390,13 +390,13 @@ class TagmanagerSetup extends Component {
 					{ containersLoading ? ( <ProgressBar small /> ) : (
 						<Select
 							enhanced
-							name='containers'
+							name="containers"
 							label={ __( 'Container', 'google-site-kit' ) }
 							value={ selectedContainer }
 							onEnhancedChange={ this.handleContainerChange }
 							outlined
 						>
-							{ containers.map( container =>
+							{ containers.map( ( container ) =>
 								<Option
 									key={ container.containerId }
 									value={ container.publicId }>
@@ -457,7 +457,7 @@ class TagmanagerSetup extends Component {
 	render() {
 		const {
 			onSettingsPage,
-			isEditing
+			isEditing,
 		} = this.props;
 
 		return (
@@ -466,7 +466,7 @@ class TagmanagerSetup extends Component {
 					! onSettingsPage &&
 					<Fragment>
 						<div className="googlesitekit-setup-module__logo">
-							<SvgIcon id="tagmanager" width="33" height="33"/>
+							<SvgIcon id="tagmanager" width="33" height="33" />
 						</div>
 						<h2 className="
 							googlesitekit-heading-3

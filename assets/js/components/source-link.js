@@ -16,9 +16,15 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import Link from 'GoogleComponents/link';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -38,7 +44,7 @@ class SourceLink extends Component {
 						inherit
 					>
 						{ name }
-					</Link>
+					</Link>,
 				] }
 			</div>
 		);

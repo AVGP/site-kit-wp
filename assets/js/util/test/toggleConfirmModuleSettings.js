@@ -7,17 +7,17 @@ const valuesToTest = [
 	[
 		'analytics',
 		{
-			'selectedAccount': '12345678'
+			selectedAccount: '12345678',
 		},
-		false
+		false,
 	],
 	[
 		'adsense',
 		{
-			'selectedAccount': '99999999'
+			selectedAccount: '99999999',
 		},
-		true
-	]
+		true,
+	],
 ];
 
 // Disable reason: Needs investigation.

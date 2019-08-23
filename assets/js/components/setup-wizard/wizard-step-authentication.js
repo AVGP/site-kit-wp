@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import Button from 'GoogleComponents/button';
 import Link from 'GoogleComponents/link';
@@ -26,7 +29,7 @@ import Optin from 'GoogleComponents/optin';
 import HelpLink from 'GoogleComponents/help-link';
 
 /**
- * WordPress dependencies.
+ * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { Component } from '@wordpress/element';
@@ -85,7 +88,7 @@ class WizardStepAuthentication extends Component {
 									id="opt-in"
 									name="optin"
 								/>
-								<HelpLink/>
+								<HelpLink />
 							</div>
 						</div>
 					</div>

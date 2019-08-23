@@ -16,8 +16,14 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import Layout from 'GoogleComponents/layout/layout';
 
+/**
+ * WordPress dependencies
+ */
 import { Fragment } from '@wordpress/element';
 
 /**

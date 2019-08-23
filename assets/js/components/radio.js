@@ -16,9 +16,15 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import { MDCFormField, MDCRadio } from 'SiteKitCore/material-components';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { Component, createRef } from '@wordpress/element';
 
 class Radio extends Component {

@@ -16,15 +16,20 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import data from 'GoogleComponents/data';
 import Notification from 'GoogleComponents/notifications/notification';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 import { Component, Fragment } from '@wordpress/element';
 
 class Alert extends Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -74,7 +79,7 @@ class Alert extends Component {
 			ctaTarget,
 		} = alerts;
 
-		const notifications = items.map( item =>
+		const notifications = items.map( ( item ) =>
 			<Notification
 				id={ item.id }
 				key={ item.id }
@@ -82,7 +87,7 @@ class Alert extends Component {
 				description={ item.message || item.description }
 				dismiss={ __( 'Dismiss', 'google-site-kit' ) }
 				isDismissable={ item.isDismissible }
-				format='small'
+				format="small"
 				ctaLink={ url }
 				ctaLabel={ ctaLabel }
 				ctaTarget={ ctaTarget }

@@ -16,24 +16,24 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import SearchConsoleAdminbarWidgetOverview from './adminbar-widget-overview';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class GoogleSitekitSearchConsoleAdminbarWidget extends Component {
-
-	constructor( props ) {
-		super( props );
-	}
-
 	render() {
-
 		if ( typeof googlesitekit.permaLink !== typeof undefined && '' === googlesitekit.permaLink ) {
 			return null;
 		}
 
 		return (
-			<SearchConsoleAdminbarWidgetOverview/>
+			<SearchConsoleAdminbarWidgetOverview />
 		);
 	}
 }

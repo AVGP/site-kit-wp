@@ -16,9 +16,15 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import SvgIcon from 'GoogleUtil/svg-icon';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class DashboardSplashModule extends Component {
@@ -30,7 +36,7 @@ class DashboardSplashModule extends Component {
 				<div className="googlesitekit-splash-module__logo">
 					{ 'pagespeed' === icon ?
 						<img alt="PageSpeed Icon" src={ googlesitekit.admin.assetsRoot + 'images/icon-pagespeed.png' } /> :
-						<SvgIcon id={ icon } width="33" height="33"/> }
+						<SvgIcon id={ icon } width="33" height="33" /> }
 				</div>
 				<h3 className="
 					googlesitekit-subheading-1

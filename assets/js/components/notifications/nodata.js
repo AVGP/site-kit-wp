@@ -16,9 +16,15 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import CTA from 'GoogleComponents/notifications/cta';
 import ctaWrapper from 'GoogleComponents/notifications/cta-wrapper';
 
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
@@ -30,7 +36,6 @@ import { __, sprintf } from '@wordpress/i18n';
  * @param {boolean} createGrid Adds a full grid layout with padding. Default: false.
  */
 const getNoDataComponent = ( moduleName, inGrid = false, fullWidth = false, createGrid = false ) => {
-
 	const cta = <CTA
 
 		/* translators: %s: Module name */

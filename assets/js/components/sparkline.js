@@ -16,13 +16,18 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import GoogleChart from 'GoogleComponents/google-chart';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 
 class Sparkline extends Component {
-
 	render() {
 		const {
 			data,
@@ -46,23 +51,23 @@ class Sparkline extends Component {
 			height: '50',
 			enableInteractivity: false,
 			chartArea: {
-				'height': '100%',
-				'width': '100%',
+				height: '100%',
+				width: '100%',
 			},
 			legend: { position: 'none' },
 			axisFontSize: 0,
 			hAxis: {
 				baselineColor: 'none',
-				ticks: []
+				ticks: [],
 			},
 			vAxis: {
 				baselineColor: 'none',
-				ticks: []
+				ticks: [],
 			},
 			axes: [],
 			colors: [
 				0 <= +change ? 'green' : 'red', // Converts change to number.
-			]
+			],
 		};
 
 		return (

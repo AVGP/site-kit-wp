@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import DashboardSetupAlerts from 'GoogleComponents/notifications/dashboard-setup-alerts';
 import DashboardModulesAlerts from 'GoogleComponents/notifications/dashboard-modules-alerts';
 import DashboardWinsAlerts from 'GoogleComponents/notifications/dashboard-wins-alerts';
@@ -23,6 +26,9 @@ import DashboardAuthAlert from 'GoogleComponents/notifications/dashboard-auth-al
 import { createAddToFilter } from 'GoogleUtil/helpers';
 import { getQueryParameter } from 'GoogleUtil';
 
+/**
+ * WordPress dependencies
+ */
 import { addFilter } from '@wordpress/hooks';
 const { setup } = window.googlesitekit;
 const notification = getQueryParameter( 'notification' );

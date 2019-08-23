@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types';
 import data from 'GoogleComponents/data';
 import Spinner from 'GoogleComponents/spinner';
@@ -30,6 +33,9 @@ import {
 } from 'GoogleUtil';
 import GenericError from 'GoogleComponents/notifications/generic-error';
 
+/**
+ * WordPress dependencies
+ */
 import { sprintf, __ } from '@wordpress/i18n';
 import { Component } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
@@ -38,7 +44,6 @@ import { applyFilters } from '@wordpress/hooks';
  * A single module. Keeps track of its own active state and settings.
  */
 class SetupModule extends Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -63,13 +68,12 @@ class SetupModule extends Component {
 			// Redirect to ReAuthentication URL.
 			window.location = getReAuthUrl( slug, true );
 		} catch ( err ) {
-
 			showErrorNotification( GenericError, {
 				id: 'activate-module-error',
 				title: __( 'Internal Server Error', 'google-site-kit' ),
 				description: err.message,
 				format: 'small',
-				type: 'win-error'
+				type: 'win-error',
 			} );
 			this.setState( { isSaving: false } );
 		}
@@ -91,11 +95,11 @@ class SetupModule extends Component {
 		const { modules } = googlesitekit;
 
 		// Check if required module is active.
-		if ( modules[slug].required.length ) {
-			const requiredModules = modules[slug].required;
+		if ( modules[ slug ].required.length ) {
+			const requiredModules = modules[ slug ].required;
 
-			requiredModules.forEach( requiredModule => {
-				if ( ! modules[requiredModule].setupComplete ) {
+			requiredModules.forEach( ( requiredModule ) => {
+				if ( ! modules[ requiredModule ].setupComplete ) {
 					blockedByParentModule = true;
 				}
 			} );
@@ -108,7 +112,7 @@ class SetupModule extends Component {
 				${ blockedByParentModule ? 'googlesitekit-settings-connect-module--disabled' : '' }
 			` } key={ slug }>
 				<div className="googlesitekit-settings-connect-module__switch">
-					<Spinner isSaving={ isSaving }/>
+					<Spinner isSaving={ isSaving } />
 				</div>
 				<div className="googlesitekit-settings-connect-module__logo">
 					{
@@ -133,7 +137,7 @@ class SetupModule extends Component {
 					<p className="googlesitekit-settings-connect-module__cta">
 						<Link
 							onClick={ this.activateOrDeactivate }
-							href=''
+							href=""
 							inherit
 							disabled={ blockedByParentModule }
 							arrow

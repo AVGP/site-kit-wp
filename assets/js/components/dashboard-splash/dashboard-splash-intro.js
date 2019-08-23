@@ -16,10 +16,16 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import Button from 'GoogleComponents/button';
 import Logo from 'GoogleComponents/logo';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -41,7 +47,7 @@ class DashboardSplashIntro extends Component {
 				<div className="mdc-layout-grid">
 					<div className="mdc-layout-grid__inner">
 						<div className={ mainColumnClassName }>
-							<Logo/>
+							<Logo />
 							<h1 className="googlesitekit-splash-intro__title">
 								{ title }
 							</h1>

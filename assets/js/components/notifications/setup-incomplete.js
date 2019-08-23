@@ -17,10 +17,16 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import CTA from 'GoogleComponents/notifications/cta';
 import ctaWrapper from 'GoogleComponents/notifications/cta-wrapper';
 import { getReAuthUrl } from 'GoogleUtil';
 
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n';
 
 /**

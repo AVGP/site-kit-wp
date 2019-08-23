@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import withData from 'GoogleComponents/higherorder/withdata';
 import {
 	getTimeInSeconds,
@@ -26,12 +29,14 @@ import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/d
 import PreviewTable from 'GoogleComponents/preview-table';
 import MiniChart from 'GoogleComponents/mini-chart';
 
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n';
 import { map } from 'lodash';
 import { Component, Fragment } from '@wordpress/element';
 
 class AnalyticsDashboardWidgetTopAcquisitionSources extends Component {
-
 	render() {
 		const { data } = this.props;
 		if ( ! data || ! data.length ) {
@@ -43,29 +48,29 @@ class AnalyticsDashboardWidgetTopAcquisitionSources extends Component {
 		const headers = [
 			{
 				title: __( 'Medium', 'google-site-kit' ),
-				tooltip: __( 'Medium refers to where your traffic originated from', 'google-site-kit' )
+				tooltip: __( 'Medium refers to where your traffic originated from', 'google-site-kit' ),
 			},
 			{
 				title: __( 'Users', 'google-site-kit' ),
-				tooltip: __( 'Number of users that originated from that traffic', 'google-site-kit' )
+				tooltip: __( 'Number of users that originated from that traffic', 'google-site-kit' ),
 			},
 			{
 				title: __( 'New Users', 'google-site-kit' ),
-				tooltip: sprintf( __( 'Number of new users to visit your page over %s', 'google-site-kit' ), dateRangeFrom )
+				tooltip: sprintf( __( 'Number of new users to visit your page over %s', 'google-site-kit' ), dateRangeFrom ),
 			},
 			{
 				title: __( 'Sessions', 'google-site-kit' ),
-				tooltip: sprintf( __( 'Number of sessions users had on your website over %s', 'google-site-kit' ), dateRangeFrom )
+				tooltip: sprintf( __( 'Number of sessions users had on your website over %s', 'google-site-kit' ), dateRangeFrom ),
 			},
 			{
 				title: __( 'Percentage', 'google-site-kit' ),
-				tooltip: __( 'Percentage of sessions', 'google-site-kit' )
+				tooltip: __( 'Percentage of sessions', 'google-site-kit' ),
 			},
 		];
-		const totalSessions = data[0].data.totals[0].values[0];
+		const totalSessions = data[ 0 ].data.totals[ 0 ].values[ 0 ];
 
-		const dataMapped = map( data[0].data.rows, ( row, i ) => {
-			const percent = ( row.metrics[0].values[0] / totalSessions * 100 );
+		const dataMapped = map( data[ 0 ].data.rows, ( row, i ) => {
+			const percent = ( row.metrics[ 0 ].values[ 0 ] / totalSessions * 100 );
 
 			// Exclude sources below 1%.
 			if ( 1 > percent ) {
@@ -73,10 +78,10 @@ class AnalyticsDashboardWidgetTopAcquisitionSources extends Component {
 			}
 
 			return [
-				row.dimensions[0],
-				numberFormat( row.metrics[0].values[0] ),
-				numberFormat( row.metrics[0].values[1] ),
-				numberFormat( row.metrics[0].values[2] ),
+				row.dimensions[ 0 ],
+				numberFormat( row.metrics[ 0 ].values[ 0 ] ),
+				numberFormat( row.metrics[ 0 ].values[ 1 ] ),
+				numberFormat( row.metrics[ 0 ].values[ 2 ] ),
 				<Fragment key={ 'minichart-analytics-top-as-' + i }><div className="googlesitekit-table__body-item-chart-wrap">{ `${ percent.toFixed( 2 ) }%` } <MiniChart percent={ percent.toFixed( 1 ) } index={ i } /></div></Fragment>,
 			];
 		} );
@@ -109,7 +114,7 @@ export default withData(
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Single', 'Dashboard' ],
-		}
+		},
 	],
 	<PreviewTable
 		rows={ 4 }

@@ -84,7 +84,6 @@ if ( ! wp.sanitize ) {
 		},
 	};
 }
-import { stripTags } from '@wordpress/sanitize';
 
 class PostSearcher extends Component {
 	constructor( props ) {
@@ -109,6 +108,8 @@ class PostSearcher extends Component {
 	 */
 	async postSearch( query, populateResults ) {
 		populateResults( [ __( 'Loading...', 'google-site-kit' ) ] );
+
+		const { stripTags } = wp.sanitize;
 
 		try {
 			const results = await data.get( 'core', 'search', encodeURIComponent( stripTags( query ) ) );

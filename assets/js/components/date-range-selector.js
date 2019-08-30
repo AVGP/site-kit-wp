@@ -7,6 +7,17 @@ import PropTypes from 'prop-types';
 const { _n, sprintf } = wp.i18n;
 const { Component } = wp.element;
 
+export const lastDaysOption = ( value ) => {
+	return {
+		// eslint-disable-next-line @wordpress/valid-sprintf
+		label: sprintf(
+			_n( 'Last 24 hours', 'Last %d days', value, 'google-site-kit' ),
+			value
+		),
+		value,
+	};
+};
+
 class DateRangeSelector extends Component {
 	constructor( props ) {
 		super( props );
@@ -24,17 +35,6 @@ class DateRangeSelector extends Component {
 	}
 
 	render() {
-		const lastDaysOption = ( value ) => {
-			return {
-				// eslint-disable-next-line @wordpress/valid-sprintf
-				label: sprintf(
-					_n( 'Last 24 hours', 'Last %d days', value, 'google-site-kit' ),
-					value
-				),
-				value,
-			};
-		};
-
 		return (
 			<Select
 				enhanced
@@ -42,14 +42,7 @@ class DateRangeSelector extends Component {
 				name="time_period"
 				label=""
 				onEnhancedChange={ this.handleSelection }
-				options={
-					[
-						lastDaysOption( '7' ),
-						lastDaysOption( '14' ),
-						lastDaysOption( '28' ),
-						lastDaysOption( '90' ),
-					]
-				}
+				options={ this.props.options }
 				value={ this.props.value }
 			/>
 		);
@@ -58,6 +51,12 @@ class DateRangeSelector extends Component {
 
 DateRangeSelector.defaultProps = {
 	value: '28',
+	options: [
+		lastDaysOption( '7' ),
+		lastDaysOption( '14' ),
+		lastDaysOption( '28' ),
+		lastDaysOption( '90' ),
+	],
 };
 
 DateRangeSelector.propTypes = {

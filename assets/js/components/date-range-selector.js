@@ -44,10 +44,10 @@ class DateRangeSelector extends Component {
 				onEnhancedChange={ this.handleSelection }
 				options={
 					[
-						lastDaysOption( 7 ),
-						lastDaysOption( 14 ),
-						lastDaysOption( 28 ),
-						lastDaysOption( 90 ),
+						lastDaysOption( '7' ),
+						lastDaysOption( '14' ),
+						lastDaysOption( '28' ),
+						lastDaysOption( '90' ),
 					]
 				}
 				value={ this.props.value }
@@ -57,7 +57,7 @@ class DateRangeSelector extends Component {
 }
 
 DateRangeSelector.defaultProps = {
-	value: 28,
+	value: '28',
 };
 
 DateRangeSelector.propTypes = {

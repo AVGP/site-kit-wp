@@ -236,7 +236,8 @@ export default withData(
 			identifier: 'adsense',
 			datapoint: 'earnings',
 			data: {
-				dateRange: 'daily-this-month',
+				dateRange: 'this-month',
+				dimensions: [ 'DATE' ],
 			},
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),

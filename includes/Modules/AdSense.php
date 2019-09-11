@@ -528,9 +528,12 @@ tag_partner: "site_kit"
 				case 'earnings':
 					$data = array_merge(
 						array(
-							'dateRange'  => 'last-28-days',
-							'dimensions' => '',
-						)
+							// Named date range slug.
+							'dateRange'  => array( 'last-28-days' ),
+							// Array of dimension strings.
+							'dimensions' => array(),
+						),
+						$data
 					);
 
 					$dates = $this->date_range_to_dates( $data['dateRange'] );
@@ -541,8 +544,7 @@ tag_partner: "site_kit"
 
 					list ( $start_date, $end_date ) = $dates;
 
-					$dimensions = $data['dimensions'];
-					$dimensions = is_string( $dimensions ) ? explode( ',', $dimensions ) : (array) $dimensions;
+					$dimensions = (array) $data['dimensions'];
 					$args       = compact( 'start_date', 'end_date', 'dimensions' );
 
 					if ( isset( $data['limit'] ) ) {
@@ -706,18 +708,6 @@ tag_partner: "site_kit"
 					date( 'Y-m-d', strtotime( '7 days ago' ) ),
 					date( 'Y-m-d', strtotime( '7 days ago' ) ),
 				);
-			case '7-days':
-				return array(
-					date( 'Y-m-d', strtotime( '7 days ago' ) ),
-					date( 'Y-m-d', strtotime( 'yesterday' ) ),
-				);
-			case 'prev-7-days':
-				return array(
-					date( 'Y-m-d', strtotime( '14 days ago' ) ),
-					date( 'Y-m-d', strtotime( '8 days ago' ) ),
-				);
-			// Intentional fallthrough.
-			case 'daily-this-month':
 			case 'this-month':
 				return array(
 					date( 'Y-m-01' ),
@@ -731,10 +721,10 @@ tag_partner: "site_kit"
 					date( $last_year . '-m-01' ),
 					date( $last_year . '-m-' . $last_date_of_month ),
 				);
-			case '28-days':
+			case 'prev-7-days':
 				return array(
-					date( 'Y-m-d', strtotime( '28 days ago' ) ),
-					date( 'Y-m-d', strtotime( 'yesterday' ) ),
+					date( 'Y-m-d', strtotime( '14 days ago' ) ),
+					date( 'Y-m-d', strtotime( '8 days ago' ) ),
 				);
 			case 'prev-28-days':
 				return array(

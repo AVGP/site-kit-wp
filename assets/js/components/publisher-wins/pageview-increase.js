@@ -68,7 +68,6 @@ const pageviewIncrease = ( data, id ) => {
 			},
 		],
 		type: 'win-stats-increase',
-		storageType: 'localStorage',
 		dismissExpires: getTimeInSeconds( 'month' ),
 		showOnce: true,
 	};

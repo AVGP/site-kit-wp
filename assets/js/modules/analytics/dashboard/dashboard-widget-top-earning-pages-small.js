@@ -19,7 +19,9 @@
 /**
  * External dependencies
  */
+import { map } from 'lodash';
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 import { getTimeInSeconds } from 'GoogleUtil';
 import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/data-table';
 import PreviewTable from 'GoogleComponents/preview-table';
@@ -30,8 +32,12 @@ import CTA from 'GoogleComponents/notifications/cta';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { map } from 'lodash';
 import { Component } from '@wordpress/element';
+
+/**
+ * Internal dependencies
+ */
+import { analyticsAdsenseReportDataDefaults } from '../util';
 
 class AdSenseDashboardWidgetTopPagesTableSmall extends Component {
 	static renderLayout( component ) {
@@ -151,9 +157,10 @@ export default withData(
 	AdSenseDashboardWidgetTopPagesTableSmall,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'analytics',
-			datapoint: 'adsense',
+			datapoint: 'report',
+			data: analyticsAdsenseReportDataDefaults,
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: 'Dashboard',

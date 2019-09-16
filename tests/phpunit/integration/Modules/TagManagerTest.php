@@ -85,6 +85,7 @@ class TagManagerTest extends TestCase {
 				'module_tags',
 				'required',
 				'autoActivate',
+				'internal',
 				'screenId',
 				'hasSettings',
 				'provides',
@@ -106,9 +107,9 @@ class TagManagerTest extends TestCase {
 				'connection',
 				'account-id',
 				'container-id',
-				'list-accounts',
-				'list-containers',
-				'save',
+				'accounts-containers',
+				'containers',
+				'settings',
 			),
 			$tagmanager->get_datapoints()
 		);

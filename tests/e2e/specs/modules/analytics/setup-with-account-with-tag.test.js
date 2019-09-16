@@ -26,6 +26,7 @@ async function proceedToSetUpAnalytics() {
 }
 
 const EXISTING_PROPERTY_ID = 'UA-00000001-1';
+const EXISTING_ACCOUNT_ID = '100';
 
 let getAccountsRequestHandler;
 let tagPermissionRequestHandler;
@@ -34,7 +35,7 @@ describe( 'setting up the Analytics module with an existing account and existing
 	beforeAll( async () => {
 		await page.setRequestInterception( true );
 		useRequestInterception( ( request ) => {
-			if ( request.url().match( 'modules/analytics/data/get-accounts' ) && getAccountsRequestHandler ) {
+			if ( request.url().match( 'modules/analytics/data/accounts-properties-profiles' ) && getAccountsRequestHandler ) {
 				getAccountsRequestHandler( request );
 			} else if ( request.url().match( 'modules/analytics/data/tag-permission' ) && tagPermissionRequestHandler ) {
 				tagPermissionRequestHandler( request );
@@ -75,7 +76,10 @@ describe( 'setting up the Analytics module with an existing account and existing
 		tagPermissionRequestHandler = ( request ) => {
 			request.respond( {
 				status: 200,
-				body: 'true',
+				body: JSON.stringify( {
+					accountId: EXISTING_ACCOUNT_ID,
+					propertyId: EXISTING_PROPERTY_ID,
+				} ),
 			} );
 		};
 		await setAnalyticsExistingPropertyId( EXISTING_PROPERTY_ID );
@@ -113,7 +117,7 @@ describe( 'setting up the Analytics module with an existing account and existing
 		await proceedToSetUpAnalytics();
 
 		await expect( page ).toMatchElement( '.googlesitekit-setup-module--analytics p', { text: /google_analytics_existing_tag_permission/i } );
-		await expect( page ).toMatchElement( '.googlesitekit-setup-module--analytics button', { text: /create an account/i } );
-		await expect( page ).toMatchElement( '.googlesitekit-setup-module--analytics button', { text: /re-fetch my account/i } );
+		await expect( page ).not.toMatchElement( '.googlesitekit-setup-module--analytics button', { text: /create an account/i } );
+		await expect( page ).not.toMatchElement( '.googlesitekit-setup-module--analytics button', { text: /re-fetch my account/i } );
 	} );
 } );

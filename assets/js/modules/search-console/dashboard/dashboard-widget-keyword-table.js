@@ -20,6 +20,7 @@
  * External dependencies
  */
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 import { getTimeInSeconds, numberFormat } from 'GoogleUtil';
 import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/data-table';
 import PreviewTable from 'GoogleComponents/preview-table';
@@ -89,10 +90,14 @@ export default withData(
 	SearchConsoleDashboardWidgetKeywordTable,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'search-console',
-			datapoint: 'search-keywords',
-			permaLink: googlesitekit.permaLink,
+			datapoint: 'searchanalytics',
+			data: {
+				url: googlesitekit.permaLink,
+				dimensions: 'query',
+				limit: 10,
+			},
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Single', 'Dashboard' ],

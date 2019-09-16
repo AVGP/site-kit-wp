@@ -20,13 +20,14 @@
  * External dependencies
  */
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 import { getTimeInSeconds, numberFormat } from 'GoogleUtil';
 import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/data-table';
 import PreviewTable from 'GoogleComponents/preview-table';
 /**
  * Internal dependencies
  */
-import { isDataZeroForReporting } from '../util';
+import { isDataZeroForReporting, getTopPagesReportDataDefaults } from '../util';
 
 /**
  * WordPress dependencies
@@ -86,9 +87,10 @@ export default withData(
 	WPAnalyticsDashboardWidgetTopPagesTable,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'analytics',
-			datapoint: 'top-pages',
+			datapoint: 'report',
+			data: getTopPagesReportDataDefaults(),
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: 'WPDashboard',

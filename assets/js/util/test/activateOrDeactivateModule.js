@@ -27,7 +27,7 @@ const valuesToTest = [
 ];
 
 const restApiClient = {
-	setModuleData( slug, type, status ) {
+	setModuleActive( slug, status ) {
 		return {
 			then() {
 				return status;

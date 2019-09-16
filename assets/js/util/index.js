@@ -23,30 +23,27 @@ import {
 	map,
 	isNull,
 	isUndefined,
-	indexOf,
 	unescape,
 	deburr,
 	toLower,
 	trim,
 	trimEnd,
 } from 'lodash';
-import data from 'GoogleComponents/data';
+import data, { TYPE_CORE } from 'GoogleComponents/data';
 import SvgIcon from 'GoogleUtil/svg-icon';
 
 /**
  * WordPress dependencies
  */
 import {
-	addAction,
 	addFilter,
 	applyFilters,
 } from '@wordpress/hooks';
-import {
-	__,
-	_n,
-	sprintf,
-} from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs, getQueryString } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
+
+export * from './storage';
 
 /**
  * Remove a parameter from a URL string.
@@ -275,44 +272,6 @@ export const changeToPercent = ( previous, current ) => {
 	return change;
 };
 
-export function addPerformanceMonitoring() {
-	const googlesitekitPerformance = window.googlesitekitPerformance || {};
-	addAction( 'googlesitekit.moduleLoaded', 'googlesitekit.PerformanceMetrics.moduleLoaded', function( context ) {
-		googlesitekitPerformance.loadedActionTriggered = ( new Date() ).getTime();
-		const elapsed = ( googlesitekitPerformance.loadedActionTriggered - googlesitekitPerformance.domReady ) + 'ms';
-		googlesitekitPerformance._timeToLoadedActionTriggered = elapsed;
-		googlesitekitPerformance.loadedActionContext = context;
-		console.log( 'Performance Metrics: App loaded', elapsed ); // eslint-disable-line no-console
-	} );
-
-	addAction( 'googlesitekit.dataReceived', 'googlesitekit.PerformanceMetrics.dataReceived', function( datapoint ) {
-		const currentlyAt = ( new Date() ).getTime();
-		googlesitekitPerformance.dataReceived = googlesitekitPerformance.dataReceived || [];
-		googlesitekitPerformance._timeToDataReceived = googlesitekitPerformance._timeToDataReceived || [];
-		googlesitekitPerformance.dataReceived.push( currentlyAt );
-		const elapsed = ( currentlyAt - googlesitekitPerformance.domReady ) + 'ms';
-		googlesitekitPerformance._timeToDataReceived.push( elapsed );
-		console.log( 'Performance Metrics: Async Data loaded: ' + datapoint, elapsed ); // eslint-disable-line no-console
-	} );
-
-	addAction( 'googlesitekit.cachedDataUsed', 'googlesitekit.PerformanceMetrics.cachedDataUsed', function( datapoint ) {
-		const currentlyAt = ( new Date() ).getTime();
-		googlesitekitPerformance.cachedDataUsed = googlesitekitPerformance.cachedDataUsed || [];
-		googlesitekitPerformance._timeToCachedDataUsed = googlesitekitPerformance._timeToCachedDataUsed || [];
-		googlesitekitPerformance.cachedDataUsed.push( currentlyAt );
-		const elapsed = ( currentlyAt - googlesitekitPerformance.domReady ) + 'ms';
-		googlesitekitPerformance._timeToCachedDataUsed.push( elapsed );
-		console.log( 'Performance Metrics: Cached Data loaded: ' + datapoint, elapsed ); // eslint-disable-line no-console
-	} );
-
-	addAction( 'googlesitekit.rootAppDidMount', 'googlesitekit.PerformanceMetrics.rootAppDidMount', function() {
-		googlesitekitPerformance.rootAppMounted = ( new Date() ).getTime();
-		const elapsed = ( googlesitekitPerformance.rootAppMounted - googlesitekitPerformance.domReady ) + 'ms';
-		googlesitekitPerformance._timeToAppMounted = elapsed;
-		console.log( 'Performance Metrics: App mounted', elapsed ); // eslint-disable-line no-console
-	} );
-}
-
 /**
  * Fallback helper to get a query parameter from the current URL.
  *
@@ -375,7 +334,7 @@ export const extractForSparkline = ( rowData, column ) => {
 
 export const refreshAuthentication = async () => {
 	try {
-		const response = await data.get( 'core', 'user', 'authentication' );
+		const response = await data.get( TYPE_CORE, 'user', 'authentication' );
 
 		const requiredAndGrantedScopes = response.grantedScopes.filter( ( scope ) => {
 			return -1 !== response.requiredScopes.indexOf( scope );
@@ -602,106 +561,6 @@ export const sendAnalyticsTrackingEvent = ( eventCategory, eventName, eventLabel
 	}
 };
 
-/**
- * Detect whether browser storage is both supported and available.
- *
- * @param {string} type Browser storage to test. ex localStorage or sessionStorage.
- * @return {boolean}
- */
-export const storageAvailable = ( type ) => {
-	const storage = window[ type ];
-	if ( ! storage ) {
-		return false;
-	}
-	try {
-		const x = '__storage_test__';
-
-		storage.setItem( x, x );
-		storage.removeItem( x );
-		return true;
-	} catch ( e ) {
-		return e instanceof DOMException && (
-
-			// everything except Firefox
-			22 === e.code ||
-
-			// Firefox
-			1014 === e.code ||
-
-			// test name field too, because code might not be present
-			// everything except Firefox
-			'QuotaExceededError' === e.name ||
-
-			// Firefox
-			'NS_ERROR_DOM_QUOTA_REACHED' === e.name ) &&
-
-			// acknowledge QuotaExceededError only if there's something already stored
-			0 !== storage.length;
-	}
-};
-
-/**
- * Set Cache to Browser Storage.
- *
- * @param {string} cacheType Browser storage.
- * @param {string} cacheKey  Cache key.
- * @param {*}      cacheData Cache data to store.
- * @return {boolean}
- */
-export const setCache = ( cacheType, cacheKey, cacheData ) => {
-	if ( 0 > indexOf( [ 'localStorage', 'sessionStorage' ], cacheType ) ) {
-		return;
-	}
-
-	if ( ! storageAvailable( cacheType ) ) {
-		return;
-	}
-
-	window[ cacheType ].setItem( cacheKey, cacheData );
-
-	return true;
-};
-
-/**
- * Get Cache from Browser Storage.
- *
- * @param {string} cacheType Browser storage.
- * @param {string} cacheKey  Cache key.
- * @return {*}
- */
-export const getCache = ( cacheType, cacheKey ) => {
-	if ( 0 > indexOf( [ 'localStorage', 'sessionStorage' ], cacheType ) ) {
-		return;
-	}
-
-	if ( ! storageAvailable( cacheType ) ) {
-		return;
-	}
-
-	return window[ cacheType ].getItem( cacheKey );
-};
-
-/**
- * Delete Cache from Browser Storage.
- *
- * @param {string} cacheType Browser storage.
- * @param {string} cacheKey  Cache key.
- * @return {*}
- */
-export const deleteCache = ( cacheType, cacheKey ) => {
-	if ( 0 > indexOf( [ 'localStorage', 'sessionStorage' ], cacheType ) ) {
-		return;
-	}
-
-	if ( ! storageAvailable( cacheType ) ) {
-		return;
-	}
-
-	window[ cacheType ].removeItem( cacheKey );
-
-	return true;
-};
-
 export const findTagInHtmlContent = ( html, module ) => {
 	let existingTag = false;
 
@@ -719,35 +578,60 @@ export const findTagInHtmlContent = ( html, module ) => {
  * while requesting list of accounts.
  *
  * @param {string} module Module slug.
+ *
+ * @param {string|null} The tag id if found, otherwise null.
  */
 export const getExistingTag = async ( module ) => {
-	try {
-		let tagFound = data.getCache( module, 'existingTag', 300 );
+	const CACHE_KEY = `${ module }::existingTag`;
+	const { homeURL, ampMode } = googlesitekit.admin;
+	const tagFetchQueryArgs = {
+		// Indicates a tag checking request. This lets Site Kit know not to output its own tags.
+		tagverify: 1,
+		// Add a timestamp for cache-busting.
+		timestamp: Date.now(),
+	};
 
-		if ( false === tagFound ) {
-			const html = await fetch( `${ googlesitekit.admin.homeURL }?tagverify=1&timestamp=${ Date.now() }` ).then( ( res ) => {
-				return res.text();
-			} );
+	let tagFound = data.getCache( CACHE_KEY, 300 );
 
-			tagFound = findTagInHtmlContent( html, module );
-			if ( ! tagFound ) {
-				tagFound = '';
+	if ( tagFound === undefined ) {
+		try {
+			tagFound = await scrapeTag( addQueryArgs( homeURL, tagFetchQueryArgs ), module );
+
+			if ( ! tagFound && 'secondary' === ampMode ) {
+				tagFound = await apiFetch( { path: '/wp/v2/posts?per_page=1' } ).then(
+					// Scrape the first post in AMP mode, if there is one.
+					( posts ) => posts.slice( 0, 1 ).map( async ( post ) => {
+						return await scrapeTag( addQueryArgs( post.link, { ...tagFetchQueryArgs, amp: 1 } ), module );
+					} ).pop()
+				);
 			}
-		}
 
-		data.setCache( module, 'existingTag', tagFound );
+			data.setCache( CACHE_KEY, tagFound || null );
+		} catch ( err ) {}
+	}
 
-		return new Promise( ( resolve ) => {
-			resolve( tagFound );
-		} );
-	} catch ( err ) {
+	return Promise.resolve( tagFound || null );
+};
 
-		// nothing.
+/**
+ * Scrapes a module tag from the given URL.
+ *
+ * @param {string} url URL request and parse tag from.
+ * @param {string} module The module to parse tag for.
+ *
+ * @return {string|null} The tag id if found, otherwise null.
+ */
+export const scrapeTag = async ( url, module ) => {
+	try {
+		const html = await fetch( url ).then( ( res ) => res.text() );
+		return extractTag( html, module ) || null;
+	} catch ( error ) {
+		return null;
 	}
 };
 
 /**
- * Extracts the tag related to a module from the given string.
+ * Extracts the tag related to a module from the given string by detecting Analytics and AdSense tag variations.
  *
  * @param {string} string The string from where to find the tag.
  * @param {string} tag    The tag to search for, one of 'adsense' or 'analytics'
@@ -760,25 +644,40 @@ export const extractTag = ( string, tag ) => {
 	switch ( tag ) {
 		case 'analytics':
 
-			// Detect analytics tag variations.
-			reg = new RegExp( /<script async(?:="")? src=['|"]https:\/\/www.googletagmanager.com\/gtag\/js\?id=(.*?)['|"]><\/script>/gm );
+			// Detect gtag script calls.
+			reg = new RegExp( /<script [^>]*src=['|"]https:\/\/www.googletagmanager.com\/gtag\/js\?id=(.*?)['|"][^>]*><\/script>/gm );
 			result = reg.exec( string );
 			result = result ? result[ 1 ] : false;
 
+			// Detect common analytics code usage.
 			if ( ! result ) {
 				reg = new RegExp( /__gaTracker\( ?['|"]create['|"], ?['|"](.*?)['|"], ?['|"]auto['|"] ?\)/gm );
 				result = reg.exec( string );
 				result = result ? result[ 1 ] : false;
 			}
 
+			// Detect ga create calls.
 			if ( ! result ) {
 				reg = new RegExp( /ga\( ?['|"]create['|"], ?['|"](.*?)['|"], ?['|"]auto['|"] ?\)/gm );
 				result = reg.exec( string );
 				result = result ? result[ 1 ] : false;
 			}
-
 			if ( ! result ) {
 				reg = new RegExp( /_gaq.push\( ?\[ ?['|"]_setAccount['|"], ?['|"](.*?)['|"] ?] ?\)/gm );
+				result = reg.exec( string );
+				result = result ? result[ 1 ] : false;
+			}
+
+			// Detect amp-analytics gtag.
+			if ( ! result ) {
+				reg = new RegExp( /<amp-analytics [^>]*type="gtag"[^>]*>[^<]*<script type="application\/json">[^<]*"gtag_id":\s*"([^"]+)"/gm );
+				result = reg.exec( string );
+				result = result ? result[ 1 ] : false;
+			}
+
+			// Detect amp-analytics googleanalytics.
+			if ( ! result ) {
+				reg = new RegExp( /<amp-analytics [^>]*type="googleanalytics"[^>]*>[^<]*<script type="application\/json">[^<]*"account":\s*"([^"]+)"/gm );
 				result = reg.exec( string );
 				result = result ? result[ 1 ] : false;
 			}
@@ -786,9 +685,17 @@ export const extractTag = ( string, tag ) => {
 			break;
 
 		case 'adsense':
+			// Detect google_ad_client.
 			reg = new RegExp( /google_ad_client: ?["|'](.*?)["|']/gm );
 			result = reg.exec( string );
 			result = result ? result[ 1 ] : false;
+
+			// Detect amp-auto-ads tag.
+			if ( ! result ) {
+				reg = new RegExp( /<amp-auto-ads [^>]*data-ad-client="([^"]+)"/gm );
+				result = reg.exec( string );
+				result = result ? result[ 1 ] : false;
+			}
 			break;
 	}
 
@@ -804,7 +711,12 @@ export const extractTag = ( string, tag ) => {
  * @return {Promise}
  */
 export const activateOrDeactivateModule = ( restApiClient, moduleSlug, status ) => {
-	return restApiClient.setModuleData( moduleSlug, 'active', status ).then( ( responseData ) => {
+	return restApiClient.setModuleActive( moduleSlug, status ).then( ( responseData ) => {
+		// We should really be using state management. This is terrible.
+		if ( window.googlesitekit.modules && window.googlesitekit.modules[ moduleSlug ] ) {
+			window.googlesitekit.modules[ moduleSlug ].active = responseData.active;
+		}
+
 		sendAnalyticsTrackingEvent(
 			`${ moduleSlug }_setup`,
 			! responseData.active ? 'module_deactivate' : 'module_activate',
@@ -911,12 +823,34 @@ export function stringToSlug( string ) {
 }
 
 /**
+ * Gets the current dateRange string.
+ *
+ * @return {string} the date range string.
+ */
+export function getCurrentDateRange() {
+	/**
+	 * Filter the date range used for queries.
+	 *
+	 * @param String The selected date range. Default 'Last 28 days'.
+	 */
+	return applyFilters( 'googlesitekit.dateRange', __( 'Last 28 days', 'google-site-kit' ) );
+}
+
+/**
  * Return the currently selected date range as a string that fits in the sentence:
  * "Data for the last [date range]", eg "Date for the last 28 days".
  */
 export function getDateRangeFrom() {
-	const currentDateRange = applyFilters( 'googlesitekit.dateRange', __( 'Last 28 days', 'google-site-kit' ) );
-	return currentDateRange.replace( 'Last ', '' );
+	return getCurrentDateRange().replace( 'Last ', '' );
+}
+
+/**
+ * Gets the current dateRange slug.
+ *
+ * @return {string} the date range slug.
+ */
+export function getCurrentDateRangeSlug() {
+	return stringToSlug( getCurrentDateRange() );
 }
 
 /**
@@ -946,13 +880,37 @@ export function moduleIcon( module, blockedByParentModule, width = '33', height 
 }
 
 /**
- * Clear App localstorage.
+ * Clears session storage and local storage.
+ *
+ * Both of these should be cleared to make sure no Site Kit data is left in the
+ * browser's cache regardless of which storage implementation is used.
  */
 export function clearAppLocalStorage() {
-	if ( localStorage ) {
-		localStorage.clear();
+	if ( window.localStorage ) {
+		window.localStorage.clear();
 	}
-	if ( sessionStorage ) {
-		sessionStorage.clear();
+	if ( window.sessionStorage ) {
+		window.sessionStorage.clear();
 	}
+}
+
+/**
+ * Sorts an object by its keys.
+ *
+ * The returned value will be a sorted copy of the input object.
+ * Any inner objects will also be sorted recursively.
+ *
+ * @param {Object} obj The data object to sort.
+ * @return {Object} The sorted data object.
+ */
+export function sortObjectProperties( obj ) {
+	const orderedData = {};
+	Object.keys( obj ).sort().forEach( ( key ) => {
+		let val = obj[ key ];
+		if ( val && 'object' === typeof val && ! Array.isArray( val ) ) {
+			val = sortObjectProperties( val );
+		}
+		orderedData[ key ] = val;
+	} );
+	return orderedData;
 }

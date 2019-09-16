@@ -20,8 +20,8 @@
  * External dependencies
  */
 import ProgressBar from 'GoogleComponents/progress-bar';
-import { addPerformanceMonitoring } from 'GoogleUtil';
 import Notification from 'GoogleComponents/notifications/notification';
+import { Suspense as ReactSuspense, lazy as ReactLazy } from 'react';
 
 // Load the data module.
 /**
@@ -40,7 +40,17 @@ import ModuleApp from './components/module-app';
 import { setLocaleData } from '@wordpress/i18n';
 import { doAction, applyFilters } from '@wordpress/hooks';
 import { Component, render, Fragment } from '@wordpress/element';
-const { lazy, Suspense } = React;
+let { Suspense, lazy } = wp.element;
+
+// Check for `Suspense` and `lazy` in `wp.element`; versions before 2.4.0 did
+// not include either, so we need to fallback to the React versions. See:
+// https://github.com/WordPress/gutenberg/blob/master/packages/element/CHANGELOG.md#240-2019-05-21
+if ( ! Suspense ) {
+	Suspense = ReactSuspense;
+}
+if ( ! lazy ) {
+	lazy = ReactLazy;
+}
 
 class GoogleSitekitModule extends Component {
 	constructor( props ) {
@@ -49,10 +59,6 @@ class GoogleSitekitModule extends Component {
 
 		// Set up translations.
 		setLocaleData( googlesitekit.locale, 'google-site-kit' );
-
-		if ( window.googlesitekit.admin.debug ) {
-			addPerformanceMonitoring();
-		}
 
 		const {
 			showModuleSetupWizard,
@@ -69,10 +75,6 @@ class GoogleSitekitModule extends Component {
 			error,
 			info,
 		} );
-	}
-
-	componentDidMount() {
-		doAction( 'googlesitekit.rootAppDidMount' );
 	}
 
 	render() {

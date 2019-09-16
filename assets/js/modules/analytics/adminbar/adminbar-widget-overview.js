@@ -21,6 +21,7 @@
  */
 import DataBlock from 'GoogleComponents/data-block.js';
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 import {
 	getTimeInSeconds,
 	readableLargeNumber,
@@ -32,6 +33,7 @@ import {
 	calculateOverviewData,
 	isDataZeroForReporting,
 	getAnalyticsErrorMessageFromData,
+	overviewReportDataDefaults,
 } from '../util';
 import PreviewBlock from 'GoogleComponents/preview-block';
 
@@ -99,11 +101,13 @@ export default withData(
 	AnalyticsAdminbarWidgetOverview,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'analytics',
-			datapoint: 'overview',
-			permaLink: googlesitekit.permaLink,
-			postID: googlesitekit.postID,
+			datapoint: 'report',
+			data: {
+				...overviewReportDataDefaults,
+				url: googlesitekit.permaLink,
+			},
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: 'Adminbar',

@@ -20,6 +20,7 @@
  * External dependencies
  */
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 import {
 	getTimeInSeconds,
 	numberFormat,
@@ -28,6 +29,10 @@ import {
 import { getDataTableFromData, TableOverflowContainer } from 'GoogleComponents/data-table';
 import PreviewTable from 'GoogleComponents/preview-table';
 import MiniChart from 'GoogleComponents/mini-chart';
+/**
+ * Internal dependencies
+ */
+import { trafficSourcesReportDataDefaults } from '../util';
 
 /**
  * WordPress dependencies
@@ -107,10 +112,13 @@ export default withData(
 	AnalyticsDashboardWidgetTopAcquisitionSources,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'analytics',
-			datapoint: 'traffic-sources',
-			permaLink: googlesitekit.permaLink,
+			datapoint: 'report',
+			data: {
+				...trafficSourcesReportDataDefaults,
+				url: googlesitekit.permaLink,
+			},
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Single', 'Dashboard' ],

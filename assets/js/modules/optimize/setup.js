@@ -21,7 +21,7 @@
  */
 import Button from 'GoogleComponents/button';
 import Link from 'GoogleComponents/link';
-import data from 'GoogleComponents/data';
+import data, { TYPE_MODULES } from 'GoogleComponents/data';
 import { TextField, Input, HelperText } from 'SiteKitCore/material-components';
 import SvgIcon from 'GoogleUtil/svg-icon';
 import PropTypes from 'prop-types';
@@ -140,7 +140,7 @@ class OptimizeSetup extends Component {
 			ampExperimentJson,
 		};
 
-		return await data.set( 'modules', 'optimize', 'save', optimizeAccount ).then( () => {
+		return await data.set( TYPE_MODULES, 'optimize', 'settings', optimizeAccount ).then( () => {
 			if ( finishSetup ) {
 				finishSetup();
 			}
@@ -239,9 +239,9 @@ class OptimizeSetup extends Component {
 			ampExperimentJsonValidated,
 		} = this.state;
 
-		const { AMPenabled } = window.googlesitekit.admin;
+		const { ampEnabled } = window.googlesitekit.admin;
 
-		if ( ! analyticsUseSnippet || ! AMPenabled ) {
+		if ( ! analyticsUseSnippet || ! ampEnabled ) {
 			return null;
 		}
 

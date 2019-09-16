@@ -48,11 +48,10 @@ import { __ } from '@wordpress/i18n';
  * @param {React.Component} DataDependentComponent The React Component to render once we have its required data.
  * @param {Array}           selectData             An array of data objects to resolve.
  *                                                 Each object includes the following properties:
- *                                                 {string}         dataObject The object type, eg 'modules'.
- *                                                 {string}         identifier The object name, typically the module name eg 'analytics.
- *                                                 {string}         datapoint  The datapoint name to be resolved by the API.
- *                                                 {string}         permaLink  The current page permaLink if available. Optional.
- *                                                 {number}         postID     The current postID. Optional.
+ *                                                 {string}         type       The data type. Either 'core' or 'modules'.
+ *                                                 {string}         identifier The data identifier, for example a module slug.
+ *                                                 {string}         datapoint  The datapoint.
+ *                                                 {Object?}        data       Optional arguments to pass along.
  *                                                 {number}         priority   The data request priority, used for batching.
  *                                                 {number}         maxAge     How long to cache the data results.
  *                                                 {string | array} context    The context(s) to resolve data, eg 'Dashboard'.
@@ -145,15 +144,15 @@ const withData = (
 			 * to trigger `handleDataError` and `handleDataSuccess` helpers.
 			 *
 			 * @param {Object} returnedData The data returned from the API.
-			 * @param {string} datapoint    The datapoint name resolved by the API.
-			 * @param {string} identifier   The object name, typically the module name eg 'analytics.
+			 * @param {Object} requestData  The data object for the request.
 			 */
-			const handleReturnedData = ( returnedData, datapoint, identifier ) => {
+			const handleReturnedData = ( returnedData, requestData ) => {
 				// If available, `handleDataError` will be called for errors (with a string) and empty data.
 				const {
 					handleDataError,
 					handleDataSuccess,
 				} = this.props;
+				const { datapoint, identifier, toState } = requestData;
 
 				// Check to see if the returned data is an error. If so, getDataError will return a string.
 				const error = getDataError( returnedData );
@@ -168,7 +167,7 @@ const withData = (
 					if ( handleDataError ) {
 						handleDataError( error );
 					}
-				} else if ( isDataZero( returnedData, datapoint ) ) { // No data error, next check for zero data.
+				} else if ( isDataZero( returnedData, datapoint, requestData ) ) { // No data error, next check for zero data.
 					// If we have a `handleDataError` call it without any parameters (indicating empty data).
 					if ( handleDataError ) {
 						handleDataError( error );
@@ -183,6 +182,7 @@ const withData = (
 
 				// Resolve the returned data my setting state on the Component.
 				this.setState( {
+					requestDataToState: toState,
 					data: returnedData,
 					datapoint,
 					module: identifier,
@@ -199,8 +199,8 @@ const withData = (
 						 */
 						addFilter( `googlesitekit.module${ acontext }DataRequest`,
 							`googlesitekit.data${ acontext }`, ( moduleData ) => {
-								data.callback = ( returnedData, datapoint ) => {
-									handleReturnedData( returnedData, datapoint, data.identifier );
+								data.callback = ( returnedData ) => {
+									handleReturnedData( returnedData, data );
 								};
 								moduleData.push( data );
 								return moduleData;
@@ -212,8 +212,8 @@ const withData = (
 					 */
 					addFilter( `googlesitekit.module${ data.context }DataRequest`,
 						`googlesitekit.data${ data.context }`, ( moduleData ) => {
-							data.callback = ( returnedData, datapoint ) => {
-								handleReturnedData( returnedData, datapoint, data.identifier );
+							data.callback = ( returnedData ) => {
+								handleReturnedData( returnedData, data );
 							};
 							moduleData.push( data );
 							return moduleData;
@@ -229,6 +229,7 @@ const withData = (
 				module,
 				zeroData,
 				error,
+				requestDataToState,
 			} = this.state;
 
 			// Render the loading component until we have data.
@@ -258,6 +259,7 @@ const withData = (
 				<DataDependentComponent
 					data={ data }
 					datapoint={ datapoint }
+					requestDataToState={ requestDataToState }
 					{ ...this.props }
 				/>
 			);

@@ -24,10 +24,11 @@ import {
 	getTimeInSeconds,
 } from 'GoogleUtil';
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 /**
  * Internal dependencies
  */
-import { extractAnalyticsDashboardData } from '../util';
+import { extractAnalyticsDashboardData, siteAnalyticsReportDataDefaults } from '../util';
 import PreviewBlock from 'GoogleComponents/preview-block';
 
 /**
@@ -137,9 +138,10 @@ export default withData(
 	AnalyticsDashboardWidgetSiteStats,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'analytics',
-			datapoint: 'site-analytics',
+			datapoint: 'report',
+			data: siteAnalyticsReportDataDefaults,
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: 'Single',

@@ -22,13 +22,14 @@
 import GoogleChart from 'GoogleComponents/google-chart.js';
 import { getSiteKitAdminURL, getTimeInSeconds } from 'GoogleUtil';
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 /**
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
 import Link from 'GoogleComponents/link';
 import PreviewBlock from 'GoogleComponents/preview-block';
-import { extractAnalyticsDataForTrafficChart, getAnalyticsErrorMessageFromData, isDataZeroForTrafficSources } from '../util';
+import { extractAnalyticsDataForTrafficChart, getAnalyticsErrorMessageFromData, trafficSourcesReportDataDefaults, isDataZeroForReporting } from '../util';
 
 /**
  * WordPress dependencies
@@ -111,10 +112,13 @@ export default withData(
 	DashboardAcquisitionPieChart,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'analytics',
-			datapoint: 'traffic-sources',
-			permaLink: googlesitekit.permaLink,
+			datapoint: 'report',
+			data: {
+				...trafficSourcesReportDataDefaults,
+				url: googlesitekit.permaLink,
+			},
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'Dashboard', 'Single' ],
@@ -122,6 +126,6 @@ export default withData(
 	],
 	<PreviewBlock width="282px" height="282px" shape="circular" />,
 	{},
-	isDataZeroForTrafficSources,
+	isDataZeroForReporting,
 	getAnalyticsErrorMessageFromData
 );

@@ -23,6 +23,7 @@ import PreviewBlocks from 'GoogleComponents/preview-blocks';
 import DataBlock from 'GoogleComponents/data-block.js';
 import CTA from 'GoogleComponents/notifications/cta';
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 import {
 	getTimeInSeconds,
 	prepareSecondsForDisplay,
@@ -32,7 +33,7 @@ import {
 /**
  * Internal dependencies
  */
-import { calculateOverviewData, getAnalyticsErrorMessageFromData, isDataZeroForReporting } from '../util';
+import { calculateOverviewData, getAnalyticsErrorMessageFromData, isDataZeroForReporting, overviewReportDataDefaults } from '../util';
 
 /**
  * WordPress dependencies
@@ -98,9 +99,10 @@ export default withData(
 	WPAnalyticsDashboardWidgetOverview,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'analytics',
-			datapoint: 'overview',
+			datapoint: 'report',
+			data: overviewReportDataDefaults,
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: [ 'WPDashboard' ],

@@ -70,7 +70,6 @@ const trafficIncrease = ( data, id ) => {
 				},
 			],
 		type: 'win-stats',
-		storageType: 'localStorage',
 		dismissExpires: getTimeInSeconds( 'week' ),
 		showOnce: true,
 	};

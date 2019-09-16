@@ -20,7 +20,7 @@
  * External dependencies
  */
 import Autocomplete from 'accessible-autocomplete/react';
-import data from 'GoogleComponents/data';
+import data, { TYPE_CORE } from 'GoogleComponents/data';
 import Button from 'GoogleComponents/button';
 import Layout from 'GoogleComponents/layout/layout';
 import {
@@ -109,10 +109,9 @@ class PostSearcher extends Component {
 	async postSearch( query, populateResults ) {
 		populateResults( [ __( 'Loading...', 'google-site-kit' ) ] );
 
-		const { stripTags } = wp.sanitize;
-
 		try {
-			const results = await data.get( 'core', 'search', encodeURIComponent( stripTags( query ) ) );
+			const results = await data.get( TYPE_CORE, 'search', 'post-search', { query: encodeURIComponent( query ) } );
+
 			if ( 0 < results.length ) {
 				populateResults( map( results, ( result ) => {
 					return result.post_title;

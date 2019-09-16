@@ -19,18 +19,23 @@
 /**
  * External dependencies
  */
-import data from 'GoogleComponents/data';
+import { each, find, filter } from 'lodash';
+import data, { TYPE_MODULES } from 'GoogleComponents/data';
 import {
 	getSiteKitAdminURL,
 	getReAuthUrl,
 	sendAnalyticsTrackingEvent,
 } from 'GoogleUtil';
 
-import { each, find, filter } from 'lodash';
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { analyticsAdsenseReportDataDefaults } from '../analytics/util';
 
 export function reduceAdSenseData( rows ) {
 	const dataMap = [
@@ -97,7 +102,7 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
 	try {
 		// First, fetch the list of accounts connected to this user.
 		statusUpdateCallback( __( 'Locating accounts…', 'google-site-kit' ) );
-		const results = await data.get( 'modules', 'adsense', 'accounts' ).then( ( res ) => res ).catch( ( e ) => e );
+		const results = await data.get( TYPE_MODULES, 'adsense', 'accounts' ).then( ( res ) => res ).catch( ( e ) => e );
 		const accountData = results.data && ( ! results.data.status || 200 === results.data.status ) ? results.data : results;
 		const hasError = accountData && accountData.message && accountData.message.error;
 		let id = accountData && accountData.length && accountData[ 0 ] ? accountData[ 0 ].id : false;
@@ -176,7 +181,7 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
 				statusUpdateCallback( __( 'Searching for domain…', 'google-site-kit' ) );
 				for ( const account of accounts ) {
 					const accountId = account.id;
-					const urlchannels = await data.get( 'modules', 'adsense', 'urlchannels', { clientId: accountId } ).then( ( res ) => res ).catch( ( e ) => e );
+					const urlchannels = await data.get( TYPE_MODULES, 'adsense', 'urlchannels', { clientId: accountId } ).then( ( res ) => res ).catch( ( e ) => e );
 					const parsedUrl = new URL( googlesitekit.admin.siteURL );
 					const matches = urlchannels && urlchannels.length ? filter( urlchannels, { urlPattern: parsedUrl.hostname } ) : [];
 
@@ -196,7 +201,7 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
 
 			statusUpdateCallback( __( 'Account found, checking account status…', 'google-site-kit' ) );
 
-			const alertsResults = await data.get( 'modules', 'adsense', 'alerts', { accountId: id } ).then( ( res ) => res ).catch( ( e ) => e );
+			const alertsResults = await data.get( TYPE_MODULES, 'adsense', 'alerts', { accountId: id } ).then( ( res ) => res ).catch( ( e ) => e );
 			const alerts = alertsResults.data && ( ! alertsResults.data.status || 200 === alertsResults.data.status ) ? alertsResults.data : alertsResults;
 			const hasAlertsError = alerts && alerts.message && alerts.message.error;
 
@@ -206,7 +211,7 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
 				sendAnalyticsTrackingEvent( 'adsense_setup', 'adsense_account_pending', 'accountPendingReview status ads-display-pending' );
 			} else {
 				// Attempt to retrieve and save the client id.
-				const clientResults = await data.get( 'modules', 'adsense', 'clients' ).then( ( res ) => res ).catch( ( e ) => e );
+				const clientResults = await data.get( TYPE_MODULES, 'adsense', 'clients' ).then( ( res ) => res ).catch( ( e ) => e );
 				const clients = clientResults.data && ( ! clientResults.data.status || 200 === clientResults.data.status ) ? clientResults.data : clientResults;
 				const hasClientError = clients && clients.message && clients.message.error;
 				const item = clients && clients.length ? find( clients, { productCode: 'AFC' } ) : false;
@@ -214,7 +219,7 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
 					clientId = item.id;
 
 					// Save the client ID immediately so we can verify the site by inserting the tag.
-					await data.set( 'modules', 'adsense', 'client-id', { clientId } ).then( ( res ) => res ).catch( ( e ) => e );
+					await data.set( TYPE_MODULES, 'adsense', 'client-id', { clientId } ).then( ( res ) => res ).catch( ( e ) => e );
 				}
 
 				if ( hasAlertsError ) {
@@ -254,7 +259,7 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
 						// Check the URL channels.
 						statusUpdateCallback( __( 'Looking for site domain…', 'google-site-kit' ) );
 
-						const urlchannels = await data.get( 'modules', 'adsense', 'urlchannels', { clientId } ).then( ( res ) => res ).catch( ( e ) => e );
+						const urlchannels = await data.get( TYPE_MODULES, 'adsense', 'urlchannels', { clientId } ).then( ( res ) => res ).catch( ( e ) => e );
 
 						// Find a URL channel with a matching domain
 						const matches = urlchannels && urlchannels.length && filter( urlchannels, ( channel ) => {
@@ -352,7 +357,7 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
 							sendAnalyticsTrackingEvent( 'adsense_setup', 'adsense_account_connected' );
 
 							// Save the publisher clientId: AdSense setup is complete!
-							await data.set( 'modules', 'adsense', 'setup-complete', { clientId } ).then( ( res ) => res ).catch( ( e ) => e );
+							await data.set( TYPE_MODULES, 'adsense', 'setup-complete', { clientId } ).then( ( res ) => res ).catch( ( e ) => e );
 						}
 					} else {
 						/**
@@ -379,7 +384,7 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
 		}
 
 		// Save the account status.
-		await data.set( 'modules', 'adsense', 'account-status', { accountStatus } ).then( ( res ) => res ).catch( ( e ) => e );
+		await data.set( TYPE_MODULES, 'adsense', 'account-status', { accountStatus } ).then( ( res ) => res ).catch( ( e ) => e );
 
 		return ( {
 			isLoading: false,
@@ -427,11 +432,13 @@ export async function getAdSenseAccountStatus( statusUpdateCallback, existingTag
  * @return {boolean}
  */
 export const isAdsenseConnectedAnalytics = async () => {
-	const { active } = googlesitekit.modules.adsense;
+	const { active: adsenseActive } = googlesitekit.modules.adsense;
+	const { active: analyticsActive } = googlesitekit.modules.analytics;
+
 	let adsenseConnect = true;
 
-	if ( active ) {
-		await data.get( 'modules', 'analytics', 'adsense' ).then( ( res ) => {
+	if ( adsenseActive && analyticsActive ) {
+		await data.get( TYPE_MODULES, 'analytics', 'report', analyticsAdsenseReportDataDefaults ).then( ( res ) => {
 			if ( res ) {
 				adsenseConnect = true;
 			}
@@ -453,7 +460,13 @@ export const isAdsenseConnectedAnalytics = async () => {
  * @param {Array} adSenseData Data returned from the AdSense.
  * @return {boolean}
  */
-export const isDataZeroAdSense = ( adSenseData ) => {
+export const isDataZeroAdSense = ( adSenseData, datapoint, dataRequest ) => {
+	// We only check the last 28 days of earnings because it is the most reliable data point to identify new setups:
+	// only new accounts or accounts not showing ads would have zero earnings in the last 28 days.
+	if ( ! dataRequest.data || ! dataRequest.data.dateRange || 'last-28-days' !== dataRequest.data.dateRange ) {
+		return false;
+	}
+
 	let totals = [];
 	if ( adSenseData.totals ) {
 		totals = adSenseData.totals;

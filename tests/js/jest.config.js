@@ -17,7 +17,6 @@ module.exports = {
 		'<rootDir>/node_modules',
 		'<rootDir>/build',
 	],
-
 	// Matches aliases in webpack.config.js.
 	moduleNameMapper: {
 		'^SiteKitCore/(.*)$': '<rootDir>assets/js/$1',

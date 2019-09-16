@@ -21,6 +21,7 @@
  */
 import DataBlock from 'GoogleComponents/data-block.js';
 import withData from 'GoogleComponents/higherorder/withdata';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 import { getTimeInSeconds } from 'GoogleUtil';
 /**
  * Internal dependencies
@@ -88,11 +89,14 @@ export default withData(
 	SearchConsoleAdminbarWidgetOverview,
 	[
 		{
-			dataObject: 'modules',
+			type: TYPE_MODULES,
 			identifier: 'search-console',
-			datapoint: 'sc-site-analytics',
-			permaLink: googlesitekit.permaLink,
-			postID: googlesitekit.postID,
+			datapoint: 'searchanalytics',
+			data: {
+				url: googlesitekit.permaLink,
+				dimensions: 'date',
+				compareDateRanges: true,
+			},
 			priority: 1,
 			maxAge: getTimeInSeconds( 'day' ),
 			context: 'Adminbar',

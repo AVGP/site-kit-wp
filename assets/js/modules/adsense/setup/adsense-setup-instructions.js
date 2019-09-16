@@ -26,7 +26,7 @@ import Button from 'GoogleComponents/button';
  * Internal dependencies
  */
 import AdSenseSettings from '../settings/adsense-settings';
-import data from 'GoogleComponents/data';
+import data, { TYPE_MODULES } from 'GoogleComponents/data';
 import Spinner from 'GoogleComponents/spinner';
 import { Fragment } from 'react';
 import { sendAnalyticsTrackingEvent } from 'GoogleUtil';
@@ -150,10 +150,10 @@ class AdSenseSetupInstructions extends Component {
 										if ( 'account-connected' === accountStatus && clientId ) {
 											this.setState( { isSaving: true } );
 											const enableAutoAds = document.getElementById( 'enableAutoAds' );
-											const adsenseTagEnabled = ( enableAutoAds && ! enableAutoAds.checked ) ? false : true;
+											const useSnippet = enableAutoAds && enableAutoAds.checked;
 
 											// Save the publisher clientId: AdSense setup is complete!
-											data.set( 'modules', 'adsense', 'setup-complete', { clientId, adsenseTagEnabled } ).then( () => {
+											data.set( TYPE_MODULES, 'adsense', 'setup-complete', { clientId, useSnippet } ).then( () => {
 												document.location = ctaLink;
 											} ).catch( () => {
 												this.setState( { isSaving: false } );

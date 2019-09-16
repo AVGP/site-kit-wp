@@ -15,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import DateRangeSelector from 'GoogleComponents/date-range-selector';
-
 import PropTypes from 'prop-types';
+
 /**
  * WordPress dependencies
  */
@@ -28,16 +28,16 @@ import { Component } from '@wordpress/element';
 
 class DashboardModuleHeader extends Component {
 	render() {
-		const { title, timePeriod, description } = this.props;
+		const { title, description } = this.props;
 		return (
 			<header className="googlesitekit-dashboard-module-header">
 				<div className="mdc-layout-grid__inner">
 					{ title &&
 					<div className="
 								mdc-layout-grid__cell
-								mdc-layout-grid__cell--span-10-desktop
-								mdc-layout-grid__cell--span-6-tablet
-								mdc-layout-grid__cell--span-2-phone
+								mdc-layout-grid__cell--span-12-desktop
+								mdc-layout-grid__cell--span-8-tablet
+								mdc-layout-grid__cell--span-4-phone
 							">
 						<h3 className="
 									googlesitekit-heading-3
@@ -50,20 +50,6 @@ class DashboardModuleHeader extends Component {
 						}
 					</div>
 					}
-					{ timePeriod &&
-					<div className="
-								mdc-layout-grid__cell
-								mdc-layout-grid__cell--span-2-desktop
-								mdc-layout-grid__cell--span-2-tablet
-								mdc-layout-grid__cell--span-2-phone
-								mdc-layout-grid__cell--align-bottom
-								mdc-layout-grid__cell--align-right
-							">
-						<div className="googlesitekit-dashboard-module-header__time">
-							<DateRangeSelector />
-						</div>
-					</div>
-					}
 				</div>
 			</header>
 		);
@@ -72,13 +58,11 @@ class DashboardModuleHeader extends Component {
 
 DashboardModuleHeader.propTypes = {
 	title: PropTypes.string,
-	timePeriod: PropTypes.string,
 	description: PropTypes.string,
 };
 
 DashboardModuleHeader.defaultProps = {
 	title: '',
-	timePeriod: '',
 	description: '',
 };
 

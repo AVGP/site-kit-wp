@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-import data from 'GoogleComponents/data';
+import data, { TYPE_MODULES } from 'GoogleComponents/data';
 /**
  * Internal dependencies
  */
@@ -51,7 +51,7 @@ class AdSenseSetupWidget extends Component {
 
 	async getAccounts() {
 		try {
-			const responseData = await data.get( 'modules', 'adsense', 'accounts' );
+			const responseData = await data.get( TYPE_MODULES, 'adsense', 'accounts' );
 
 			/**
 			 * Defines the account status. Possible values:

@@ -71,8 +71,11 @@ export async function getTotalNotifications() {
 	total = applyFilters( 'googlesitekit.TotalNotifications', total );
 	total = Math.max( 0, Math.abs( total ) );
 
-	// Set in locale storage for external reference.
-	localStorage.setItem( 'googlesitekit::total-notifications', total );
+	// The total notifications count should always rely on local storage
+	// directly for external availability.
+	if ( window.localStorage ) {
+		window.localStorage.setItem( 'googlesitekit::total-notifications', total );
+	}
 
 	return total;
 }
@@ -80,17 +83,21 @@ export async function getTotalNotifications() {
 /**
  * Removes dismissed notifications from list.
  *
- * @param {Array} notifications
+ * @param {Array} notifications List of notifications
+ * @return {Array} Filtered list of notifications.
  */
 const removeDismissed = ( notifications ) => {
+	if ( ! notifications ) {
+		return [];
+	}
+
 	if ( ! notifications.length ) {
 		return notifications;
 	}
 
 	return notifications.filter( ( notification ) => {
-		const storageType = notification.storageType || 'sessionStorage';
-		const dismissed = window[ storageType ].getItem( `notification::dismissed::${ notification.id }` );
-		return null === dismissed;
+		const dismissed = data.getCache( `notification::dismissed::${ notification.id }` );
+		return ! dismissed;
 	} );
 };
 
@@ -111,7 +118,7 @@ const removeDisplayedWins = ( wins ) => {
 
 	// Get only the wins that haven't been displayed yet.
 	const notDisplayed = Object.values( wins ).filter( ( win ) => {
-		const displayed = sessionStorage.getItem( `notification::displayed::${ win[ 0 ].id }` );
+		const displayed = data.getCache( `notification::displayed::${ win[ 0 ].id }` );
 
 		if ( displayed ) {
 			const displayedDate = new Date( displayed );
@@ -128,7 +135,7 @@ const removeDisplayedWins = ( wins ) => {
 			// Remove the displayed storage if it has been displayed a week ago.
 			const days = getDaysBetweenDates( displayedDate, today );
 			if ( 7 <= days ) {
-				sessionStorage.removeItem( `notification::displayed::${ win[ 0 ].id }` );
+				data.deleteCache( `notification::displayed::${ win[ 0 ].id }` );
 			}
 		}
 
@@ -154,7 +161,6 @@ const removeDisplayedWins = ( wins ) => {
  */
 export async function getModulesNotifications() {
 	const results = {};
-	const cta = {};
 	let total = 0;
 
 	const modules = await modulesNotificationsToRequest();
@@ -163,19 +169,10 @@ export async function getModulesNotifications() {
 	modules.map( async ( module ) => {
 		const promise = new Promise( async ( resolve ) => {
 			const { identifier } = module;
-			let notifications = [];
 
-			const response = await data.getNotifications( identifier, getTimeInSeconds( 'day' ) );
-
-			if ( response ) {
-				notifications = response.items || [];
-				cta.url = response.url || '';
-				cta.label = response.ctaLabel || '';
-				cta.target = response.ctaTarget || '';
-
-				// Remove dismissed ones.
-				notifications = removeDismissed( notifications );
-			}
+			const notifications = removeDismissed(
+				await data.getNotifications( identifier, getTimeInSeconds( 'day' ) )
+			);
 
 			resolve( { identifier, notifications } );
 		} );
@@ -192,7 +189,7 @@ export async function getModulesNotifications() {
 		} );
 	} );
 
-	return { results, total, cta };
+	return { results, total };
 }
 
 /**
@@ -251,7 +248,11 @@ export async function getWinsNotifications() {
 
 export const incrementCount = ( state ) => {
 	const value = Math.abs( state.count ) + 1;
-	localStorage.setItem( 'googlesitekit::total-notifications', value );
+	// The total notifications count should always rely on local storage
+	// directly for external availability.
+	if ( window.localStorage ) {
+		window.localStorage.setItem( 'googlesitekit::total-notifications', value );
+	}
 	return {
 		count: value,
 	};
@@ -259,7 +260,11 @@ export const incrementCount = ( state ) => {
 
 export const decrementCount = ( state ) => {
 	const value = Math.max( 0, Math.abs( state.count ) - 1 );
-	localStorage.setItem( 'googlesitekit::total-notifications', value );
+	// The total notifications count should always rely on local storage
+	// directly for external availability.
+	if ( window.localStorage ) {
+		window.localStorage.setItem( 'googlesitekit::total-notifications', value );
+	}
 	return {
 		count: value,
 	};

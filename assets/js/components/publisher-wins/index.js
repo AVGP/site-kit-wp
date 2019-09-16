@@ -20,7 +20,12 @@
  * External dependencies
  */
 import { getTimeInSeconds, getQueryParameter } from 'GoogleUtil';
+import { TYPE_MODULES } from 'GoogleComponents/data';
 import * as publisherWinCallbacks from 'GoogleComponents/publisher-wins/callbacks';
+/**
+ * Internal dependencies
+ */
+import { overviewReportDataDefaults } from '../../modules/analytics/util';
 
 /**
  * WordPress dependencies
@@ -43,7 +48,6 @@ if ( 'authentication_success' !== notification && 'authentication_failure' !== n
 		( wins ) => {
 			const data = {
 				identifier: 'first-post-win',
-				storageType: 'localStorage',
 			};
 			wins.push( data );
 			return wins;
@@ -54,11 +58,14 @@ if ( 'authentication_success' !== notification && 'authentication_failure' !== n
 		( wins ) => {
 			const data = {
 				identifier: 'publishing-win',
-				storageType: 'localStorage',
 				withData: {
-					dataObject: 'modules',
+					type: TYPE_MODULES,
 					identifier: 'search-console',
-					datapoint: 'sc-site-analytics',
+					datapoint: 'searchanalytics',
+					data: {
+						dimensions: 'date',
+						compareDateRanges: true,
+					},
 					priority: 1,
 					maxAge: getTimeInSeconds( 'day' ),
 					context: 'Dashboard',
@@ -73,11 +80,14 @@ if ( 'authentication_success' !== notification && 'authentication_failure' !== n
 		( wins ) => {
 			const data = {
 				identifier: 'total-stats',
-				storageType: 'localStorage',
 				withData: {
-					dataObject: 'modules',
+					type: TYPE_MODULES,
 					identifier: 'search-console',
-					datapoint: 'sc-site-analytics',
+					datapoint: 'searchanalytics',
+					data: {
+						dimensions: 'date',
+						compareDateRanges: true,
+					},
 					priority: 1,
 					maxAge: getTimeInSeconds( 'day' ),
 					context: 'Dashboard',
@@ -93,11 +103,11 @@ if ( 'authentication_success' !== notification && 'authentication_failure' !== n
 			( wins ) => {
 				const data = {
 					identifier: 'pageview-increase',
-					storageType: 'localStorage',
 					withData: {
-						dataObject: 'modules',
+						type: TYPE_MODULES,
 						identifier: 'analytics',
-						datapoint: 'overview',
+						datapoint: 'reports',
+						data: overviewReportDataDefaults,
 						priority: 1,
 						maxAge: getTimeInSeconds( 'day' ),
 						context: 'Dashboard',
@@ -112,11 +122,11 @@ if ( 'authentication_success' !== notification && 'authentication_failure' !== n
 			( wins ) => {
 				const data = {
 					identifier: 'traffic-increase',
-					storageType: 'localStorage',
 					withData: {
-						dataObject: 'modules',
+						type: TYPE_MODULES,
 						identifier: 'analytics',
-						datapoint: 'overview',
+						datapoint: 'report',
+						data: overviewReportDataDefaults,
 						priority: 1,
 						maxAge: getTimeInSeconds( 'day' ),
 						context: 'Dashboard',

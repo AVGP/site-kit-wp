@@ -138,10 +138,10 @@ module.exports = ( env, argv ) => {
 							{
 								loader: 'babel-loader',
 								query: {
-									presets: [ [ '@babel/env', {
-										useBuiltIns: 'entry',
-										corejs: 2,
-									} ], '@babel/preset-react' ],
+									presets: [
+										'@babel/env',
+										'@babel/preset-react',
+									],
 								},
 							},
 							{

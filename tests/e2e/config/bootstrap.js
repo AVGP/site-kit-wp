@@ -11,6 +11,7 @@ import {
 	enablePageDialogAccept,
 	setBrowserViewport,
 } from '@wordpress/e2e-test-utils';
+import { getQueryArg } from '@wordpress/url';
 
 /**
  * Internal dependencies
@@ -20,6 +21,9 @@ import {
 	deactivateAllOtherPlugins,
 	resetSiteKit,
 } from '../utils';
+import {
+	toHaveAdSenseTag,
+} from '../matchers';
 
 /**
  * Environment variables
@@ -48,6 +52,11 @@ const pageEvents = [];
 
 // The Jest timeout is increased because these tests are a bit slow
 jest.setTimeout( PUPPETEER_TIMEOUT || 100000 );
+
+// Add custom matchers specific to Site Kit.
+expect.extend( {
+	toHaveAdSenseTag,
+} );
 
 /**
  * Adds an event listener to the page to handle additions of page event
@@ -155,6 +164,18 @@ function observeRestRequest( req ) {
 	if ( req.url().match( 'wp-json' ) ) {
 		// eslint-disable-next-line no-console
 		console.log( '>>>', req.method(), req.url(), req.postData() );
+	}
+	if ( req.url().match( 'google-site-kit/v1/data/' ) ) {
+		const rawBatchRequest = getQueryArg( req.url(), 'request' );
+		try {
+			const batchRequests = JSON.parse( rawBatchRequest );
+			if ( Array.isArray( batchRequests ) ) {
+				batchRequests.forEach( ( r ) => {
+					// eslint-disable-next-line no-console
+					console.log( '>>>', r.key, r.data );
+				} );
+			}
+		} catch {}
 	}
 }
 

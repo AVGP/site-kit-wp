@@ -18,7 +18,7 @@ import { getQueryArg } from '@wordpress/url';
  */
 import {
 	clearSessionStorage,
-	deactivateAllOtherPlugins,
+	deactivateUtilityPlugins,
 	resetSiteKit,
 } from '../utils';
 import {
@@ -204,13 +204,17 @@ beforeAll( async () => {
 	optOutOfEventTracking();
 	enablePageDialogAccept();
 	observeConsoleLogging();
+	// Log uncaught exceptions on the client.
+	// eslint-disable-next-line no-console
+	page.on( 'pageerror', console.error );
+
 	if ( '1' === process.env.DEBUG_REST ) {
 		page.on( 'request', observeRestRequest );
 		page.on( 'response', observeRestResponse );
 	}
 	await setBrowserViewport( 'large' );
 
-	await deactivateAllOtherPlugins();
+	await deactivateUtilityPlugins();
 	await resetSiteKit();
 } );
 
@@ -221,7 +225,7 @@ afterEach( async () => {
 } );
 
 afterAll( async () => {
-	await deactivateAllOtherPlugins();
+	await deactivateUtilityPlugins();
 	await resetSiteKit();
 	removePageEvents();
 	await page.setRequestInterception( false );

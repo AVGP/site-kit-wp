@@ -7,7 +7,7 @@ import { createURL, activatePlugin, visitAdminPage } from '@wordpress/e2e-test-u
  * Internal dependencies
  */
 import {
-	deactivateAllOtherPlugins,
+	deactivateUtilityPlugins,
 	resetSiteKit,
 	setAuthToken,
 	setClientConfig,
@@ -26,6 +26,7 @@ async function proceedToAdsenseSetup() {
 		expect( page ).toClick( '.googlesitekit-cta-link', { text: /set up adsense/i } ),
 		page.waitForSelector( '.googlesitekit-setup-module--adsense' ),
 		page.waitForResponse( ( res ) => res.url().match( 'modules/adsense/data/accounts' ) ),
+		page.waitForResponse( ( res ) => res.url().match( 'modules/adsense/data/account-status' ) ),
 	] );
 }
 
@@ -88,7 +89,7 @@ describe( 'setting up the AdSense module', () => {
 
 	afterEach( async () => {
 		Object.keys( datapointHandlers ).forEach( ( key ) => datapointHandlers[ key ] = defaultHandler );
-		await deactivateAllOtherPlugins();
+		await deactivateUtilityPlugins();
 		await resetSiteKit();
 	} );
 
